@@ -10,7 +10,7 @@ class CreateBudgetRequest extends FormRequest
 {
     public function authorize()
     {
-        return False;
+        return True;
     }
 
     public function rules()
@@ -24,7 +24,7 @@ class CreateBudgetRequest extends FormRequest
             ],
             'email' => [
                 'email', 'max:255',
-                Rule::unique('user_project_budget', 'email'),
+                Rule::unique('user_project_budgets', 'email'),
                 'required'
             ],
             'telefone' => [

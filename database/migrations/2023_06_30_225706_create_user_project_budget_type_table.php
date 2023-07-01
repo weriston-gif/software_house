@@ -11,14 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_project_budget_type', function (Blueprint $table) {
+        Schema::create('user_project_budget_types', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_project_budget_id'); // Alterado o nome da coluna para "user_project_budget_id"
             $table->unsignedBigInteger('type_id');
+            $table->bigInteger('browser_support')->nullable();
+            $table->bigInteger('platform')->nullable();
+            $table->bigInteger('operational_system')->nullable();
+            $table->bollean('printer')->default(0);
+            $table->bollean('license_access')->default(0);
+            $table->bollean('system_pay')->default(0);
             $table->decimal('final_budget_value', 8, 2);
             $table->timestamps();
         
-            $table->foreign('user_project_budget_id')->references('id')->on('user_project_budget')->onDelete('cascade'); // Alterado a referência para "user_project_budget"
+            $table->foreign('user_project_budget_id')->references('id')->on('user_project_budgets')->onDelete('cascade'); // Alterado a referência para "user_project_budget"
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
         

@@ -4,17 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBudgetRequest;
 use App\Models\Type;
-use Illuminate\Http\Request;
+use Throwable;
 use App\Models\UserProjectBudget;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-    public function index()
+    public function index(): view
     {
         $type = Type::getAllTypes();
-        
+
         return view('budget.index', compact('type'));
+    }
+
+    public function indexMobile(Request $request): view
+    {
+        $budgetId = $request->input('id');
+
+        dd($budgetId);
+        $supportsName = Type::arraySupportsName();
+
+        return view('budget.budget-mobile')
+            ->with('supportsName', $supportsName);
     }
 
     public function create()
@@ -24,11 +36,14 @@ class BudgetController extends Controller
 
     public function store(CreateBudgetRequest $request)
     {
-        // Os dados já foram validados pelo form request
+        try {
+            // Os dados já foram validados pelo form request
 
-        // Criação de um novo registro de budget
-        UserProjectBudget::create($request->validated());
-
-        return redirect()->route('budget.index')->with('success', 'Budget criado com sucesso.');
+            // Criação de um novo registro de budget
+            $budget = UserProjectBudget::create($request->validated());
+            return redirect()->route('budget.index')->with('success', 'Dados criado com sucesso, envia orçamento para E-mail: ' . $request->email)->with('budgetId', $budget->id);
+        } catch (Throwable $e) {
+            return redirect()->back()->with('error', 'Erro ao criar o budget: ' . $e->getMessage());
+        }
     }
 }

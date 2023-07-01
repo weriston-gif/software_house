@@ -27,8 +27,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -43,7 +42,7 @@
                     <label for="name" class="block">Nome:</label>
                     <input type="text" name="name" id="name" value="{{ old('name') ?? '' }}" class="w-full rounded-md p-2 border border-gray-300">
                     @error('name')
-                    <span class="text-error-600">Campo Obrigatório *</span>
+                    <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-6">
@@ -55,7 +54,7 @@
                 </div>
                 <div class="col-6">
                     <label for="telefone" class="block">Telefone:</label>
-                    <input type="text" name="telefone" value="" id="telefone" class="w-full rounded-md p-2 border border-gray-300" placeholder="+55 9999-9999">
+                    <input type="text" name="telefone" value="telefone" id="telefone" class="w-full rounded-md p-2 border border-gray-300" placeholder="+55 9999-9999">
                     @error('telefone')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
@@ -105,14 +104,14 @@
                 </div>
                 <div class="col-6">
                     <label for="uf" class="block">UF:</label>
-                    <input type="text" name="uf" id="uf" value="{{ old('uf') ?? '' }}" class="rounded-md p-2 border border-gray-300">
+                    <input type="text" name="uf" id="uf" value="{{ old('uf') ?? '' }}" class="w-100 rounded-md p-2 border border-gray-300">
                     @error('uf')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-6">
                     <label for="pais" class="block">País:</label>
-                    <input type="text" name="pais" id="pais" value="{{ old('pais') ?? '' }}" class="rounded-md p-2 border border-gray-300">
+                    <input type="text" name="pais" id="pais" value="{{ old('pais') ?? '' }}" class="w-100 rounded-md p-2 border border-gray-300">
                     @error('pais')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
@@ -123,4 +122,49 @@
             </div>
         </form>
     </div>
+
+
+
 </x-guest-layout>
+
+@if(session('success'))
+@php
+$botton = '<div class="d-flex justify-content-center">
+    <button data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
+        <a href="' . route('budget.index') . '">Web</a>
+    </button>
+    <button onclick="confirmMobile(this);" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
+        <a href="' . route('budget.budget-mobile') . '">Mobile</a>
+    </button>
+    <button data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
+        <a href="' . route('budget.index') . '">Desktop</a>
+    </button>
+</div>';
+@endphp
+<script>
+    let botton = `{!! $botton !!}`;
+
+    Swal.fire({
+        title: 'Success!',
+        text: "{{ session('budgetId') }}",
+        icon: 'success',
+        showConfirmButton: false,
+        footer: botton,
+    });
+</script>
+
+@elseif(session('erro'))
+<script>
+    Swal.fire(
+        'Oops...',
+        'Erro ao cadastrar-se!',
+        'error'
+    )
+</script>
+@else
+<script>
+    $(document).ready(function() {
+        $('#toggleMyModal').modal('show');
+    });
+</script>
+@endif
