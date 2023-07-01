@@ -15,11 +15,44 @@
 <body>
     @section('title', 'orçamento')
 
-    @foreach ($type as $item)
-    <p>
-    {{ $item->description }}
-    </p>
-    @endforeach
+
+
+
+    <div id="toggleMyModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tabela de preço</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Descrção</th>
+                                <th>Valor da pagina login</th>
+                                <th>Valalor por página</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($type as $item)
+                            <tr>
+                                <td>{{ $item->description }}</td>
+                                <td>{{ $item->value_page_login }}</td>
+                                <td>{{ $item->value_per_page }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="container d-flex justify-content-center mt-5">
         <form class="w-full" action="{{ route('budget.index') }}" method="POST" enctype="multipart/form-data">
@@ -109,10 +142,15 @@
             </div>
         </form>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
+        $(document).ready(function() {
+            $('#toggleMyModal').modal('show');
+        });
+
+
         function limpa_formulario_cep() {
             // Limpa valores dos campos de endereço.
             $("#rua").val("");

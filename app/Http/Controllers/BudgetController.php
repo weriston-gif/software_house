@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBudgetRequest;
 use App\Models\Type;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserProjectBudget;
 use Illuminate\Contracts\View\View;
@@ -13,10 +12,7 @@ class BudgetController extends Controller
 {
     public function index()
     {
-        $empresa = User::findOrFail(1);
-
         $type = Type::getAllTypes();
-       dd($empresa);
         
         return view('budget.index', compact('type'));
     }
