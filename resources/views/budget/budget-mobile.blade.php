@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <h3>Orçamento Mobile</h3>
+@section('title', 'Orçamento de Mobile.')
 
     <div class="container d-flex justify-content-center mt-5">
         <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
@@ -9,7 +9,7 @@
                     <label for="platform" class="block">Qual plataforma:</label>
                     <select name="platform" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="platform">
                         @foreach ($supportsName as $valor => $nome)
-                        <option value="{{ $valor }}">{{ $nome }}</option>
+                        <option value="{{ $nome }}">{{ $nome }}</option>
                         @endforeach
                     </select>
                     @error('platform')

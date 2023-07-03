@@ -32,7 +32,7 @@ Route::resource('cadastro-orcamento-web', BudgetRegistrationWebController::class
 
 
 
-Route::get('cadastro-orcamento-mobile/{cadastro_orcamento_mobile}/{register}', [BudgetRegistrationMobileController::class, 'show'])->name('budget.show');
+Route::get('cadastro-orcamento-result/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'show'])->name('budget.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

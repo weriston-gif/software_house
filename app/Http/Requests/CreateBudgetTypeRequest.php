@@ -23,8 +23,8 @@ class CreateBudgetTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'platform' => 'integer',
-            'browser_support' => 'integer',
+            'platform' => 'string',
+            'browser_support' => 'string',
 
             'value_per_page' => 'required|numeric',
             'value_page_login' => 'integer',

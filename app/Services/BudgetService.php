@@ -34,9 +34,11 @@ class BudgetService
         $rules = [
             'user_project_budget_id' => 'required',
             'type_id' => 'required|exists:types,id',
-            'platform' => 'integer|string',
-            'browser_support' => 'integer|string',
-            'operational_system' => 'integer|string',
+
+            'platform' => 'string',
+            'browser_support' => 'string',
+            'operational_system' => 'string',
+            
             'value_page_login' => 'integer|string',
             'system_pay' => 'integer|string',
             'printer' => 'integer|string',

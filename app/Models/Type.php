@@ -34,7 +34,7 @@ class Type extends Model
         $browser = [
             self::BROWSER_SUPPORTS_FIREFOX => 'Firefox',
             self::BROWSER_SUPPORTS_CHROME => 'Google chrome',
-            self::BROWSER_SUPPORTS_BLIND => 'Regime I do Simples Naional',
+            self::BROWSER_SUPPORTS_BLIND => 'Bling e outros',
         ];
 
         return $browser;

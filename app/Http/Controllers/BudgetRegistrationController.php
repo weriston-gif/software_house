@@ -85,12 +85,15 @@ class BudgetRegistrationController extends Controller
             )
             ->get();
 
+        if (!$budgetValues) {
+            abort(404, 'Registro não encontrado.');
+        }
+
+
         $this->budgetService->sendBuget($id);
 
-        // Retorna a visualização 'budget.show' passando as variáveis $data e $budgetValues
-        return view('budget.show', [
-            'budgetValues' => $budgetValues
-        ]);
+        // Retorna a visualização 'budget.show' passando as variáveis $budgetValues
+        return view('budget.show', compact('budgetValues'));
     }
 
     /**

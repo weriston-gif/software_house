@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_project_budget_id');
             $table->unsignedBigInteger('type_id');
 
-            $table->bigInteger('browser_support')->nullable();
-            $table->bigInteger('platform')->nullable();
-            $table->bigInteger('operational_system')->nullable();
+            $table->string('browser_support')->nullable();
+            $table->string('platform')->nullable();
+            $table->string('operational_system')->nullable();
 
             $table->boolean('printer')->default(0);
             $table->boolean('license_access')->default(0);

@@ -26,7 +26,7 @@ class BudgetRegistrationWebController extends Controller
 
 
 
-        return view('budget.budget-mobile')
+        return view('budget.budget-web')
             ->with('supportsName', $supportsName);
     }
 
@@ -50,7 +50,8 @@ class BudgetRegistrationWebController extends Controller
             $browser_support = $request->input('browser_support');
             $systemPay = $request->input('system_pay');
             $type = 1;
-    
+         
+
             // Calcule o valor total usando o serviço 'BudgetService'
             $totalValue = $this->budgetService->calculateTotalValueMobile($valuePerPage, $valuePageLogin);
     

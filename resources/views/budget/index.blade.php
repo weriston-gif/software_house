@@ -1,4 +1,6 @@
 <x-guest-layout>
+@section('title', 'Dados de contato')
+
     <div id="toggleMyModal" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

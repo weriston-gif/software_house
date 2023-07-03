@@ -31,8 +31,6 @@ class BudgetRegistrationMobileController extends Controller
 
         $supportsName = Type::arraySupportsName();
 
-
-
         return view('budget.budget-mobile')
             ->with('supportsName', $supportsName);
     }
