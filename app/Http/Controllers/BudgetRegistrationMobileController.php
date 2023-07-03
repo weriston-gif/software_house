@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBudgetTypeRequest;
 use App\Models\Type;
+use App\Models\UserProjectBudget;
+use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -49,7 +51,7 @@ class BudgetRegistrationMobileController extends Controller
 
     public function store(CreateBudgetTypeRequest $request)
     {
-    
+
         // Se a validação passou, obtenha os valores do request
         $valuePerPage = $request->input('value_per_page');
         $valuePageLogin = $request->input('value_page_login');
@@ -70,22 +72,48 @@ class BudgetRegistrationMobileController extends Controller
             'system_pay' => $systemPay,
             'final_budget_value' => $totalValue,
         ];
-        
-        $regsiter = $this->budgetService->registerBudget($data_mobile);
-        $send = $this->budgetService->sendBuget($idValidate);
 
-        // Redirecione para uma rota de sucesso ou retorne uma resposta adequada
+        $register = $this->budgetService->registerBudget($data_mobile);
 
-        return view('budget.budget-mobile');
+        // Redirecione para a action 'show' com o ID do orçamento
+        return redirect()->route('budget.show', [
+            'cadastro_orcamento_mobile' => $idValidate,
+            'register' => $register,
+        ]);
     }
 
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, $register)
     {
-        //
+
+        $budgetValues = UserProjectBudgetType::join('user_project_budgets', 'user_project_budget_types.user_project_budget_id', '=', 'user_project_budgets.id')
+            ->where('user_project_budgets.id', $id)
+            ->where('user_project_budget_types.id', $register)
+            ->select(
+                'user_project_budgets.name AS name',
+                'user_project_budgets.email AS email',
+                'user_project_budgets.telefone AS telefone',
+                'user_project_budget_types.browser_support AS suport_browser',
+                'user_project_budget_types.platform AS platform',
+                'user_project_budget_types.operational_system AS sistema_operacional',
+                'user_project_budget_types.printer AS printer',
+                'user_project_budget_types.license_access AS license_access',
+                'user_project_budget_types.system_pay AS system_pay',
+                'user_project_budget_types.final_budget_value AS final_budget_value'
+            )
+            ->get();
+
+
+
+        //$send = $this->budgetService->sendBuget($id);
+
+        // Retorna a visualização 'budget.show' passando as variáveis $data e $budgetValues
+        return view('budget.show', [
+            'budgetValues' => $budgetValues
+        ]);
     }
 
     /**

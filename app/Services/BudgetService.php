@@ -82,8 +82,10 @@ class BudgetService
 
         // Salvar o novo registro no banco de dados
         $budgetType->save();
+        // Obter o ID do novo cadastro
+        $budgetTypeId = $budgetType->id;
 
-        return true;
+        return $budgetTypeId;
     }
 
     public function sendBuget($id)

@@ -26,6 +26,7 @@ Route::get('/', function () {
 
 Route::resource('cadastro-orcamento', BudgetRegistrationController::class);
 Route::resource('cadastro-orcamento-mobile', BudgetRegistrationMobileController::class);
+Route::get('cadastro-orcamento-mobile/{cadastro_orcamento_mobile}/{register}', [BudgetRegistrationMobileController::class, 'show'])->name('budget.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
