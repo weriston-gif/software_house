@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\UserProjectBudgetType;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Collection;
 use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Notifications\NewBudget;
@@ -43,7 +43,7 @@ class BudgetService
             'license_access' => 'integer|string',
             'final_budget_value' => 'required|numeric',
         ];
-    
+
         // Definir as mensagens de erro personalizadas
         $messages = [
             'user_project_budget_id.required' => 'O campo "ID do projeto" é obrigatório.',
@@ -54,44 +54,46 @@ class BudgetService
             'final_budget_value.required' => 'O campo "Valor final do orçamento" é obrigatório.',
             'final_budget_value.numeric' => 'O campo "Valor final do orçamento" deve ser um número.',
         ];
-    
+
         // Realizar a validação dos campos
         $validator = Validator::make($data, $rules, $messages);
-    
+
         // Verificar se houve erros de validação
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
-    
+
         // Criar um novo registro na tabela user_project_budget_types
         $budgetType = new UserProjectBudgetType();
         $budgetType->user_project_budget_id = $data['user_project_budget_id'];
         $budgetType->type_id = $data['type_id'];
-    
+
         // Usar o operador de coalescência nula (null coalescing operator) para definir os valores padrão
         $budgetType->platform = $data['platform'] ?? 0;
         $budgetType->browser_support = $data['browser_support'] ?? 0;
         $budgetType->operational_system = $data['operational_system'] ?? 0;
-    
+
         // Usar o operador ternário para definir valores booleanos com base nos dados fornecidos
         $budgetType->system_pay = isset($data['system_pay']) && $data['system_pay'] === '1';
         $budgetType->printer = isset($data['printer']) && $data['printer'] === '1';
         $budgetType->license_access = isset($data['license_access']) && $data['license_access'] === '1';
-    
+
         $budgetType->final_budget_value = $data['final_budget_value'];
-    
+
         // Salvar o novo registro no banco de dados
         $budgetType->save();
-    
+
         return true;
     }
 
     public function sendBuget($id)
     {
-       $users = UserProjectBudget::findOrFail($id);
-        Notification::send($users, new NewBudget());
+        $user = UserProjectBudget::findOrFail($id);
+        Notification::route('mail', $user->email)
+            ->notify(new NewBudget());
+
+        dd($user);
 
         return true;
-
     }
 }
