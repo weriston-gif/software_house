@@ -35,7 +35,7 @@
 
 
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('budget.index') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">
@@ -131,13 +131,13 @@
 @php
 $botton = '<div class="d-flex justify-content-center">
     <button data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('budget.index') . '">Web</a>
+        <a href="' . route('cadastro-orcamento-mobile.index') . '">Web</a>
     </button>
-    <button onclick="confirmMobile(this);" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('budget.budget-mobile') . '">Mobile</a>
+    <button onclick="confirmMobile(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
+        <a href="' . route('cadastro-orcamento-mobile.index') . '">Mobile</a>
     </button>
     <button data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('budget.index') . '">Desktop</a>
+        <a href="' . route('cadastro-orcamento-mobile.index') . '">Desktop</a>
     </button>
 </div>';
 @endphp
@@ -165,6 +165,70 @@ $botton = '<div class="d-flex justify-content-center">
 <script>
     $(document).ready(function() {
         $('#toggleMyModal').modal('show');
+    });
+</script>
+<script>
+    function confirmMobile(button) {
+        var id = button.getAttribute('data-attr');
+        alert(id);
+
+        sessionStorage.setItem('id', id);
+    }
+
+    function limpa_formulario_cep() {
+        // Limpa valores dos campos de endereço.
+        $("#rua").val("");
+        $("#bairro").val("");
+        $("#cidade").val("");
+        $("#uf").val("");
+        $("#pais").val("");
+    }
+
+    // Quando o campo CEP perde o foco.
+    $("#cep").blur(function() {
+        // Nova variável "cep" somente com dígitos.
+        let cep = $(this).val().replace(/\D/g, '');
+
+        // Verifica se o campo CEP possui valor informado.
+        if (cep !== "") {
+            // Expressão regular para validar o CEP.
+            let validacep = /^[0-9]{8}$/;
+
+            // Valida o formato do CEP.
+            if (validacep.test(cep)) {
+                // Preenche os campos com "..." enquanto consulta o serviço do ViaCEP.
+                $("#rua").val("").addClass("animate-pulse bg-gray-200");
+                $("#bairro").val("").addClass("animate-pulse bg-gray-200");
+                $("#cidade").val("").addClass("animate-pulse bg-gray-200");
+                $("#uf").val("").addClass("animate-pulse bg-gray-200");
+                $("#pais").val("").addClass("animate-pulse bg-gray-200");
+
+
+                // Consulta o webservice do ViaCEP.
+                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
+                    if (!("erro" in dados)) {
+                        // Atualiza os campos com os valores da consulta.
+                        $("#rua").val(dados.logradouro).removeClass("animate-pulse bg-gray-200");
+                        $("#bairro").val(dados.bairro).removeClass("animate-pulse bg-gray-200");
+                        $("#cidade").val(dados.localidade).removeClass("animate-pulse bg-gray-200");
+                        $("#uf").val(dados.uf).removeClass("animate-pulse bg-gray-200");
+                        $("#pais").val("Brasil").removeClass("animate-pulse bg-gray-200");
+
+                    } else {
+                        // CEP pesquisado não foi encontrado.
+                        limpa_formulario_cep();
+                        alert("CEP não encontrado.");
+                    }
+                });
+            } else {
+                // CEP é inválido.
+                limpa_formulario_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } else {
+            // CEP sem valor, limpa o formulário.
+            limpa_formulario_cep();
+        }
     });
 </script>
 @endif

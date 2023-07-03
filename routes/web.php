@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\BudgetRegistrationController;
+use App\Http\Controllers\BudgetRegistrationMobileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +20,18 @@ use App\Http\Controllers\BudgetController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/cadastro-orcamento', [BudgetController::class, 'index'])->name('budget.index');
-Route::post('/cadastro-orcamento', [BudgetController::class, 'store'])->name('budget.index');
 
 
-Route::match(['GET', 'POST'],'/mobile', [BudgetController::class, 'indexMobile'])->name('budget.budget-mobile');
-Route::post('/mobile', [BudgetController::class, 'storeMobile'])->name('budget.budget-mobile');
+
+
+Route::resource('cadastro-orcamento', BudgetRegistrationController::class);
+Route::resource('cadastro-orcamento-mobile', BudgetRegistrationMobileController::class);
+
+//Route::post('/cadastro-orcamento', [BudgetController::class, 'store'])->name('budget.index');
+
+
+//Route::match(['GET', 'POST'],'/mobile', [BudgetController::class, 'indexMobile'])->name('budget.budget-mobile');
+//Route::post('/mobile', [BudgetController::class, 'storeMobile'])->name('budget.budget-mobile');
 
 
 

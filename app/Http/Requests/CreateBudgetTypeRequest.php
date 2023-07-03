@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateBudgetTypeRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CreateBudgetTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return True;
     }
 
     /**
@@ -22,15 +23,24 @@ class CreateBudgetTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'value_x' => [
+                'required', 'integer',  Rule::exists('user_project_budget_types', 'id')
+            ], // validação básica para o ID
             'value_per_page' => [
                 'required',
                 'int',
             ],
             'value_page_login' => [
-                'int',
+                'boolean'
             ],
-            
+            'system_pay' => [
+                'boolean'
+            ],
+            'platform' => [
+                'string'
+            ]
+
+
         ];
     }
 }
