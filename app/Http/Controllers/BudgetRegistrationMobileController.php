@@ -8,7 +8,6 @@ use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 
 class BudgetRegistrationMobileController extends Controller
@@ -48,36 +47,9 @@ class BudgetRegistrationMobileController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
+    public function store(CreateBudgetTypeRequest $request)
     {
-        // Defina as regras de validação para cada campo
-        $rules = [
-            'platform' => 'required',
-            'value_per_page' => 'required|numeric',
-            'value_page_login' => 'integer',
-            'system_pay' => 'integer',
-            'value' => [
-                'required', 'integer', Rule::exists('user_project_budgets', 'id')
-            ],
-        ];
-
-        // Defina as mensagens de erro personalizadas
-        $messages = [
-            'platform.required' => 'O campo "Qual plataforma" é obrigatório.',
-            'value_per_page.required' => 'O campo "Quantas telas" é obrigatório.',
-        ];
-
-        try {
-            $request->validate($rules, $messages);
-        } catch (ValidationException $e) {
-            // A validação falhou, trate os erros aqui
-            $errors = $e->errors();
-            // Faça algo com os erros, como retornar uma resposta de erro ou redirecionar para a página anterior com os erros exibidos
-
-            // Exemplo de retorno de uma resposta de erro com os erros exibidos
-            return back()->withErrors($errors)->withInput();
-        }
-
+    
         // Se a validação passou, obtenha os valores do request
         $valuePerPage = $request->input('value_per_page');
         $valuePageLogin = $request->input('value_page_login');
@@ -98,10 +70,10 @@ class BudgetRegistrationMobileController extends Controller
             'system_pay' => $systemPay,
             'final_budget_value' => $totalValue,
         ];
+        
         $regsiter = $this->budgetService->registerBudget($data_mobile);
-   
- 
-        Notification::send($users, new InvoicePaid($invoice));
+        $send = $this->budgetService->sendBuget($idValidate);
+
         // Redirecione para uma rota de sucesso ou retorne uma resposta adequada
 
         return view('budget.budget-mobile');

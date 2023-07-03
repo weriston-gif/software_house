@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 use App\Models\Type;
+use App\Models\UserProjectBudget;
+use App\Notifications\NewBudget;
 
 class BudgetService
 {
@@ -84,8 +86,12 @@ class BudgetService
         return true;
     }
 
-    public function sendBuget()
+    public function sendBuget($id)
     {
-        Notification::send($users, new NewBudget($invoice));
-    
+       $users = UserProjectBudget::findOrFail($id);
+        Notification::send($users, new NewBudget());
+
+        return true;
+
+    }
 }
