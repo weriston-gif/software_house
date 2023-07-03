@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('user_project_budgets', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_budget');
+        Schema::dropIfExists('user_project_budgets');
     }
 };

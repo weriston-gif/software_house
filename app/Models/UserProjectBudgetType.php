@@ -9,13 +9,20 @@ class UserProjectBudgetType extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_project_budget_type';
+    protected $table = 'user_project_budget_types';
 
     protected $fillable = [
         'user_project_budget_id',
         'type_id',
+        'browser_support',
+        'platform',
+        'operational_system',
+        'printer',
+        'license_access',
+        'system_pay',
         'final_budget_value',
     ];
+    
 
     public function userProjectBudget()
     {

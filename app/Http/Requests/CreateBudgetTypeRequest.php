@@ -36,10 +36,7 @@ class CreateBudgetTypeRequest extends FormRequest
             'system_pay' => [
                 'boolean'
             ],
-            'platform' => [
-                'string'
-            ]
-
+     
 
         ];
     }

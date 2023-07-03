@@ -11,16 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //Schema::dropIfExists('user_project_budget_types');
         Schema::create('user_project_budget_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_project_budget_id'); // Alterado o nome da coluna para "user_project_budget_id"
+            $table->unsignedBigInteger('user_project_budget_id');
             $table->unsignedBigInteger('type_id');
+
             $table->bigInteger('browser_support')->nullable();
             $table->bigInteger('platform')->nullable();
             $table->bigInteger('operational_system')->nullable();
-            $table->bollean('printer')->default(0);
-            $table->bollean('license_access')->default(0);
-            $table->bollean('system_pay')->default(0);
+            $table->boolean('printer')->default(0);
+
+            $table->boolean('license_access')->default(0);
+            $table->boolean('system_pay')->default(0);
+            
             $table->decimal('final_budget_value', 8, 2);
             $table->timestamps();
         
@@ -35,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_project_budget_type');
+        Schema::dropIfExists('user_project_budget_types');
     }
 };

@@ -9,9 +9,12 @@
                     <label for="platform" class="block">Qual plataforma:</label>
                     <select name="platform" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="platform">
                         @foreach ($supportsName as $valor => $nome)
-                        <option value="{{ $nome }}">{{ $nome }}</option>
+                        <option value="{{ $valor }}">{{ $nome }}</option>
                         @endforeach
                     </select>
+                    @error('platform')
+                    <span style="color: red;">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="col-6">
                     <label for="value_per_page" class="block">Quantas telas: </label>
@@ -22,14 +25,20 @@
                 </div>
                 <div class="col-6">
                     <label for="value_page_login" class="block">Terá tela de login: </label>
-                    <input class="form-check-input" type="checkbox" value="" id="value_page_login">
+                    <select name="value_page_login" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="value_page_login">
+                        <option value="1">Sim </option>
+                        <option value="2">Não </option>
+                    </select>
                     @error('value_page_login')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-6">
                     <label for="system_pay" class="block">Terá tela de pagamento: </label>
-                    <input class="form-check-input" type="checkbox" value="" id="system_pay">
+                    <select name="system_pay" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="system_pay">
+                        <option value="1">Sim </option>
+                        <option value="2">Não </option>
+                    </select>
                     @error('system_pay')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
