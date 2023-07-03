@@ -23,12 +23,12 @@ class CreateBudgetTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value_x' => [
+            'value' => [
                 'required', 'integer',  Rule::exists('user_project_budget_types', 'id')
             ], // validação básica para o ID
             'value_per_page' => [
                 'required',
-                'int',
+                'integer',
             ],
             'value_page_login' => [
                 'boolean'
