@@ -8,6 +8,7 @@ use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 
 class BudgetRegistrationMobileController extends Controller
@@ -98,10 +99,12 @@ class BudgetRegistrationMobileController extends Controller
             'final_budget_value' => $totalValue,
         ];
         $regsiter = $this->budgetService->registerBudget($data_mobile);
-        dd($regsiter);
-
+   
+ 
+        Notification::send($users, new InvoicePaid($invoice));
         // Redirecione para uma rota de sucesso ou retorne uma resposta adequada
-        return redirect()->route('rota-de-sucesso');
+
+        return view('budget.budget-mobile');
     }
 
 

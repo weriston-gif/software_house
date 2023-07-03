@@ -27,14 +27,6 @@ Route::get('/', function () {
 Route::resource('cadastro-orcamento', BudgetRegistrationController::class);
 Route::resource('cadastro-orcamento-mobile', BudgetRegistrationMobileController::class);
 
-//Route::post('/cadastro-orcamento', [BudgetController::class, 'store'])->name('budget.index');
-
-
-//Route::match(['GET', 'POST'],'/mobile', [BudgetController::class, 'indexMobile'])->name('budget.budget-mobile');
-//Route::post('/mobile', [BudgetController::class, 'storeMobile'])->name('budget.budget-mobile');
-
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

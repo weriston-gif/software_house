@@ -20,11 +20,11 @@ return new class extends Migration
             $table->bigInteger('browser_support')->nullable();
             $table->bigInteger('platform')->nullable();
             $table->bigInteger('operational_system')->nullable();
-            $table->boolean('printer')->default(0);
 
+            $table->boolean('printer')->default(0);
             $table->boolean('license_access')->default(0);
             $table->boolean('system_pay')->default(0);
-            
+
             $table->decimal('final_budget_value', 8, 2);
             $table->timestamps();
         

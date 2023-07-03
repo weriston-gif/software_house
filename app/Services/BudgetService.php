@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\UserProjectBudgetType;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 use App\Models\Type;
 
@@ -64,17 +65,17 @@ class BudgetService
         $budgetType = new UserProjectBudgetType();
         $budgetType->user_project_budget_id = $data['user_project_budget_id'];
         $budgetType->type_id = $data['type_id'];
-
-        $budgetType->platform = isset($data['platform']) ? $data['platform'] : 0;
-        $budgetType->browser_support = isset($data['browser_support']) ? $data['browser_support'] : 0;
-        $budgetType->operational_system = isset($data['operational_system']) ? $data['operational_system'] : 0;
-
-
-        $budgetType->system_pay = isset($data['system_pay']) === '1' ? true: false;
-        $budgetType->printer = isset($data['printer']) ==='1' ? true : false;
-        $budgetType->license_access = isset($data['license_access'])  ==='1' ? true : false;
-
-
+    
+        // Usar o operador de coalescência nula (null coalescing operator) para definir os valores padrão
+        $budgetType->platform = $data['platform'] ?? 0;
+        $budgetType->browser_support = $data['browser_support'] ?? 0;
+        $budgetType->operational_system = $data['operational_system'] ?? 0;
+    
+        // Usar o operador ternário para definir valores booleanos com base nos dados fornecidos
+        $budgetType->system_pay = isset($data['system_pay']) && $data['system_pay'] === '1';
+        $budgetType->printer = isset($data['printer']) && $data['printer'] === '1';
+        $budgetType->license_access = isset($data['license_access']) && $data['license_access'] === '1';
+    
         $budgetType->final_budget_value = $data['final_budget_value'];
     
         // Salvar o novo registro no banco de dados
@@ -82,5 +83,9 @@ class BudgetService
     
         return true;
     }
+
+    public function sendBuget()
+    {
+        Notification::send($users, new NewBudget($invoice));
     
 }
