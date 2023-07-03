@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BudgetRegistrationController;
 use App\Http\Controllers\BudgetRegistrationMobileController;
+use App\Http\Controllers\BudgetRegistrationWebController;
+
 
 
 /*
@@ -26,6 +28,10 @@ Route::get('/', function () {
 
 Route::resource('cadastro-orcamento', BudgetRegistrationController::class);
 Route::resource('cadastro-orcamento-mobile', BudgetRegistrationMobileController::class);
+Route::resource('cadastro-orcamento-web', BudgetRegistrationWebController::class);
+
+
+
 Route::get('cadastro-orcamento-mobile/{cadastro_orcamento_mobile}/{register}', [BudgetRegistrationMobileController::class, 'show'])->name('budget.show');
 
 Route::get('/dashboard', function () {

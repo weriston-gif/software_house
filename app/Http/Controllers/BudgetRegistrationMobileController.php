@@ -77,7 +77,7 @@ class BudgetRegistrationMobileController extends Controller
 
         // Redirecione para a action 'show' com o ID do orçamento
         return redirect()->route('budget.show', [
-            'cadastro_orcamento_mobile' => $idValidate,
+            'cadastro_orcamento' => $idValidate,
             'register' => $register,
         ]);
     }
@@ -106,9 +106,7 @@ class BudgetRegistrationMobileController extends Controller
             )
             ->get();
 
-
-
-        //$send = $this->budgetService->sendBuget($id);
+        $this->budgetService->sendBuget($id);
 
         // Retorna a visualização 'budget.show' passando as variáveis $data e $budgetValues
         return view('budget.show', [

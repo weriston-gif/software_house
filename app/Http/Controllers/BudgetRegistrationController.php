@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateBudgetRequest;
 use App\Models\Type;
 use App\Models\UserProjectBudget;
+use App\Models\UserProjectBudgetType;
+use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -12,6 +14,12 @@ use Throwable;
 
 class BudgetRegistrationController extends Controller
 {
+    protected $budgetService;
+
+    public function __construct(BudgetService $budgetService)
+    {
+        $this->budgetService = $budgetService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -57,9 +65,32 @@ class BudgetRegistrationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, $register)
     {
-        //
+
+        $budgetValues = UserProjectBudgetType::join('user_project_budgets', 'user_project_budget_types.user_project_budget_id', '=', 'user_project_budgets.id')
+            ->where('user_project_budgets.id', $id)
+            ->where('user_project_budget_types.id', $register)
+            ->select(
+                'user_project_budgets.name AS name',
+                'user_project_budgets.email AS email',
+                'user_project_budgets.telefone AS telefone',
+                'user_project_budget_types.browser_support AS suport_browser',
+                'user_project_budget_types.platform AS platform',
+                'user_project_budget_types.operational_system AS sistema_operacional',
+                'user_project_budget_types.printer AS printer',
+                'user_project_budget_types.license_access AS license_access',
+                'user_project_budget_types.system_pay AS system_pay',
+                'user_project_budget_types.final_budget_value AS final_budget_value'
+            )
+            ->get();
+
+        $this->budgetService->sendBuget($id);
+
+        // Retorna a visualização 'budget.show' passando as variáveis $data e $budgetValues
+        return view('budget.show', [
+            'budgetValues' => $budgetValues
+        ]);
     }
 
     /**

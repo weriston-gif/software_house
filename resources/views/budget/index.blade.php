@@ -130,13 +130,13 @@
 @if(session('success'))
 @php
 $botton = '<div class="d-flex justify-content-center">
-    <button data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('cadastro-orcamento-mobile.index') . '">Web</a>
+    <button onclick="confirm(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
+        <a href="' . route('cadastro-orcamento-web.index') . '">Web</a>
     </button>
-    <button onclick="confirmMobile(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
+    <button onclick="confirm(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
         <a href="' . route('cadastro-orcamento-mobile.index') . '">Mobile</a>
     </button>
-    <button data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
+    <button onclick="confirm(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
         <a href="' . route('cadastro-orcamento-mobile.index') . '">Desktop</a>
     </button>
 </div>';

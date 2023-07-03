@@ -23,10 +23,13 @@ class CreateBudgetTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'platform' => 'required',
+            'platform' => 'integer',
+            'browser_support' => 'integer',
+
             'value_per_page' => 'required|numeric',
             'value_page_login' => 'integer',
             'system_pay' => 'integer',
+            
             'value' => [
                 'required', 'integer', Rule::exists('user_project_budgets', 'id')
             ],

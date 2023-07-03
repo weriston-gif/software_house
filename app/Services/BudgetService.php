@@ -94,8 +94,6 @@ class BudgetService
         Notification::route('mail', $user->email)
             ->notify(new NewBudget());
 
-        dd($user);
-
         return true;
     }
 }

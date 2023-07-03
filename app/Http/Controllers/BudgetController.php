@@ -11,11 +11,8 @@ use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-    public function index(): view
+    public function index()
     {
-        $type = Type::getAllTypes();
-
-        return view('budget.index', compact('type'));
     }
 
     public function indexMobile(Request $request): view
