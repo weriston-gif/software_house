@@ -1,8 +1,18 @@
 <x-guest-layout>
-@section('title', 'Orçamento de Desktop.')
+    @section('title', 'Orçamento de Desktop.')
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
 
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-desktop.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-12">
@@ -24,39 +34,34 @@
                     @enderror
                 </div>
                 <div class="col-6">
-                    <label for="value_page_login" class="block">Terá tela de login: </label>
-                    <select name="value_page_login" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="value_page_login">
-                        <option value="1">Sim </option>
-                        <option value="2">Não </option>
-                    </select>
-                    @error('value_page_login')
+                    <label for="system_pay" class="block">Terá tela de pagamento: </label>
+                    <input type="hidden" name="system_pay" value="0">
+                    <input type="checkbox" name="system_pay" value="1" id="system_pay">
+                    @error('system_pay')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-12">
-                    <label for="printer" class="block">Terá acesso há impressora: </label>
-                    <select name="printer" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="printer">
-                        <option value="1">Sim </option>
-                        <option value="2">Não </option>
-                    </select>
+                <div class="col-6">
+                    <label for="printer" class="block">Terá impressora: </label>
+                    <input type="hidden" name="printer" value="0">
+                    <input type="checkbox" name="printer" value="1" id="printer">
                     @error('printer')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-12">
-                    <label for="license_access" class="block">Terá licença de acesso: </label>
-                    <select name="license_access" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="license_access">
-                        <option value="1">Sim </option>
-                        <option value="2">Não </option>
-                    </select>
+                <div class="col-6">
+                    <label for="license_access" class="block">Terá licença: </label>
+                    <input type="hidden" name="license_access" value="0">
+                    <input type="checkbox" name="license_access" value="1" id="license_access">
                     @error('license_access')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-
-                
             </div>
             <input type="hidden" id="hidden-input" id="value" name="value">
+            <input type="hidden" id="type" name="type" value="3">
+
+
             <div class="flex justify-end mt-3">
                 <button type="submit" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Cadastrar-se</button>
             </div>

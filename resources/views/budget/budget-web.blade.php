@@ -12,7 +12,7 @@
     </div>
     @endif
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-web.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">
@@ -52,6 +52,8 @@
                 </div>
             </div>
             <input type="hidden" id="hidden-input" id="value" name="value">
+            <input type="hidden" id="type" name="type" value="3">
+
             <div class="flex justify-end mt-3">
                 <button type="submit" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Cadastrar-se</button>
             </div>

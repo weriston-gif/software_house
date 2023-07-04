@@ -25,6 +25,7 @@ class CreateBudgetTypeRequest extends FormRequest
         return [
             'platform' => 'string',
             'browser_support' => 'string',
+            'type' => 'string|numeric',
             'operational_system' => 'string',
             'value_per_page' => 'required|numeric',
             'value_page_login' => 'boolean',

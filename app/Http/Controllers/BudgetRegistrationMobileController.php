@@ -21,6 +21,43 @@ class BudgetRegistrationMobileController extends Controller
         $this->budgetService = $budgetService;
     }
 
+    private function getRequestValues(CreateBudgetTypeRequest $request)
+    {
+
+        $valuePerPage = $request->input('value_per_page');
+        $valuePageLogin = $request->input('value_page_login');
+        $browserSupport = $request->input('browser_support');
+        $operationalSystem = $request->input('operational_system');
+        $printer = $request->input('printer');
+        $licenseAccess = $request->input('license_access');
+        $systemPay = $request->input('system_pay');
+        $user_project_budget_id = $request->input('value');
+        $platform = $request->input('platform');
+        $type = $request->input('type');
+
+        $browserSupport = $browserSupport ?? '0';
+        $platform = $platform ?? '0';
+        $operationalSystem = $operationalSystem ?? '0';
+        $valuePerPage = $valuePerPage ?? 0;
+        $printer = $printer ?? false;
+        $licenseAccess = $licenseAccess ?? false;
+
+        
+        return [
+            'valuePerPage' => $valuePerPage,
+            'valuePageLogin' => $valuePageLogin,
+            'browserSupport' => $browserSupport,
+            'operationalSystem' => $operationalSystem,
+            'printer' => $printer,
+            'licenseAccess' => $licenseAccess,
+            'systemPay' => $systemPay,
+            'idValidate' => $user_project_budget_id,
+            'platform' => $platform,
+            'type' => $type,
+        ];
+    }
+
+
 
 
     /**
@@ -35,13 +72,7 @@ class BudgetRegistrationMobileController extends Controller
             ->with('supportsName', $supportsName);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -50,88 +81,56 @@ class BudgetRegistrationMobileController extends Controller
     public function store(CreateBudgetTypeRequest $request)
     {
 
-        // Se a validação passou, obtenha os valores do request
-        $valuePerPage = $request->input('value_per_page');
-        $valuePageLogin = $request->input('value_page_login');
-        $idValidate = $request->input('value');
-        $platform = $request->input('platform');
-        $systemPay = $request->input('system_pay');
-        $type = 2;
+        try {
+            // Obtenha os valores do request
+            $values = $this->getRequestValues($request);
 
-        // Calcule o valor total usando o serviço 'BudgetService'
-        $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin,$type);
+            $valuePerPage = $values['valuePerPage'];
+            $valuePageLogin = $values['valuePageLogin'];
+            $browserSupport = $values['browserSupport'];
+            $operationalSystem = $values['operationalSystem'];
+            $printer = $values['printer'];
+            $licenseAccess = $values['licenseAccess'];
+            $systemPay = $values['systemPay'];
+            $idValidate = $values['idValidate'];
+            $platform = $values['platform'];
+            $type = $values['type'];
 
-        // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'
-        $data_mobile = [
-            'user_project_budget_id' => $idValidate,
-            'type_id' => $type,
-            'platform' => $platform,
-            'value_page_login' => $valuePageLogin,
-            'system_pay' => $systemPay,
-            'final_budget_value' => $totalValue,
-        ];
+            dd($valuePageLogin);
+            // Calcule o valor total usando o serviço 'BudgetService'
+            $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin, $type);
+            // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'
+            $data_mobile = [
+                'user_project_budget_id' => $idValidate,
+                'valuePerPage' => $valuePerPage,
+                'type_id' => $type,
+                'platform' => $platform,
+                'value_page_login' => $valuePageLogin,
+                'system_pay' => $systemPay,
+                'final_budget_value' => $totalValue,
+                'license_access' => $licenseAccess,
+                'printer' => $printer,
+                'operational_system' => $operationalSystem,
+                'browser_support' => $browserSupport,
+            ];
 
-        $register = $this->budgetService->registerBudget($data_mobile);
 
-        // Redirecione para a action 'show' com o ID do orçamento
-        return redirect()->route('budget.show', [
-            'cadastro_orcamento' => $register,
-        ]);
-    }
+            $register = $this->budgetService->registerBudget($data_mobile);
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id, $register)
-    {
-
-        $budgetValues = UserProjectBudgetType::join('user_project_budgets', 'user_project_budget_types.user_project_budget_id', '=', 'user_project_budgets.id')
-            ->where('user_project_budgets.id', $id)
-            ->where('user_project_budget_types.id', $register)
-            ->select(
-                'user_project_budgets.name AS name',
-                'user_project_budgets.email AS email',
-                'user_project_budgets.telefone AS telefone',
-                'user_project_budget_types.browser_support AS suport_browser',
-                'user_project_budget_types.platform AS platform',
-                'user_project_budget_types.operational_system AS sistema_operacional',
-                'user_project_budget_types.printer AS printer',
-                'user_project_budget_types.license_access AS license_access',
-                'user_project_budget_types.system_pay AS system_pay',
-                'user_project_budget_types.final_budget_value AS final_budget_value'
-            )
-            ->get();
-
-        $this->budgetService->sendBuget($id);
-
-        // Retorna a visualização 'budget.show' passando as variáveis $data e $budgetValues
-        return view('budget.show', [
-            'budgetValues' => $budgetValues
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            // Verifique se o registro foi bem-sucedido antes de redirecionar
+            if ($register) {
+                // Redirecione para a action 'show' com o ID do orçamento
+                return redirect()->route('budget.show', [
+                    'cadastro_orcamento' => $idValidate,
+                    'register' => $register,
+                ])->with('success', 'Envio bem-sucedido. Orçamento registrado com sucesso.');
+            } else {
+                // Retorne para a mesma tela com uma mensagem de erro
+                return redirect()->back()->with('error', 'Erro no registro do orçamento.');
+            }
+        } catch (\Exception $exception) {
+            // Retorne para a mesma tela com uma mensagem de erro
+            return redirect()->back()->with('error', 'Erro no envio: ' . $exception->getMessage());
+        }
     }
 }

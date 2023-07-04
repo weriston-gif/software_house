@@ -62,11 +62,11 @@ class BudgetService
             'operational_system' => 'string',
             'value_page_login' => 'integer|string',
             'system_pay' => 'integer',
-            'printer' => 'integer|string',
-            'license_access' => 'integer|string',
+            'printer' => 'boolean',
+            'license_access' => 'boolean',
             'final_budget_value' => 'required|numeric',
         ];
-
+    
         // Definir as mensagens de erro personalizadas
         $messages = [
             'user_project_budget_id.required' => 'O campo "ID do projeto" é obrigatório.',
