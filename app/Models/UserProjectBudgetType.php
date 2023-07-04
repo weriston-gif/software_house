@@ -25,8 +25,6 @@ class UserProjectBudgetType extends Model
         'final_budget_value',
     ];
 
-
-
     public function userProjectBudget()
     {
         return $this->belongsTo(UserProjectBudget::class, 'user_project_budget_id');

@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateBudgetTypeRequest;
 use App\Models\Type;
 use App\Services\BudgetService;
-use Illuminate\Http\Request;
 
 class BudgetRegistrationWebController extends Controller
 {
-
     protected $budgetService;
 
     public function __construct(BudgetService $budgetService)
@@ -23,6 +21,7 @@ class BudgetRegistrationWebController extends Controller
     public function index()
     {
         $supportsName = Type::arrayBrowserName();
+
         return view('budget.budget-web')
             ->with('supportsName', $supportsName);
     }
@@ -70,7 +69,7 @@ class BudgetRegistrationWebController extends Controller
             }
         } catch (\Exception $exception) {
             // Retorne para a mesma tela com uma mensagem de erro
-            return redirect()->back()->with('error', 'Erro no envio: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'Erro no envio: '.$exception->getMessage());
         }
     }
 }

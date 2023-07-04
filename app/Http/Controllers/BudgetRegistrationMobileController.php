@@ -4,13 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBudgetTypeRequest;
 use App\Models\Type;
-use App\Models\UserProjectBudget;
-use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Validation\Rule;
 
 class BudgetRegistrationMobileController extends Controller
 {
@@ -43,7 +38,6 @@ class BudgetRegistrationMobileController extends Controller
         $printer = $printer ?? false;
         $licenseAccess = $licenseAccess ?? false;
 
-        
         return [
             'valuePerPage' => $valuePerPage,
             'valuePageLogin' => $valuePageLogin,
@@ -58,9 +52,6 @@ class BudgetRegistrationMobileController extends Controller
         ];
     }
 
-
-
-
     /**
      * Display a listing of the resource.
      */
@@ -73,12 +64,9 @@ class BudgetRegistrationMobileController extends Controller
             ->with('supportsName', $supportsName);
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      */
-
     public function store(CreateBudgetTypeRequest $request)
     {
 
@@ -114,7 +102,6 @@ class BudgetRegistrationMobileController extends Controller
                 'browser_support' => $browserSupport,
             ];
 
-
             $register = $this->budgetService->registerBudget($data_mobile);
 
             // Verifique se o registro foi bem-sucedido antes de redirecionar
@@ -130,7 +117,7 @@ class BudgetRegistrationMobileController extends Controller
             }
         } catch (\Exception $exception) {
             // Retorne para a mesma tela com uma mensagem de erro
-            return redirect()->back()->with('error', 'Erro no envio: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'Erro no envio: '.$exception->getMessage());
         }
     }
 }

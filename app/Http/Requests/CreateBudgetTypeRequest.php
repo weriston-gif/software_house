@@ -12,7 +12,7 @@ class CreateBudgetTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return True;
+        return true;
     }
 
     /**
@@ -33,7 +33,7 @@ class CreateBudgetTypeRequest extends FormRequest
             'printer' => 'boolean',
             'license_access' => 'boolean',
             'value' => [
-                'required', 'integer', Rule::exists('user_project_budgets', 'id')
+                'required', 'integer', Rule::exists('user_project_budgets', 'id'),
             ],
 
         ];

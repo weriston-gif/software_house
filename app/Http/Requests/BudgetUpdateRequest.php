@@ -26,7 +26,7 @@ class BudgetUpdateRequest extends FormRequest
             'license_access' => 'boolean',
             'system_pay' => 'boolean',
             'final_budget_value' => 'numeric',
-            'value' => 'required', Rule::exists('user_project_budgets', 'id')
+            'value' => 'required', Rule::exists('user_project_budgets', 'id'),
         ];
     }
 }

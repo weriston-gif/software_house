@@ -2,14 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\UserProjectBudgetType;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Collection;
-use App\Models\Type;
-use App\Models\UserProjectBudget;
-use App\Notifications\NewBudget;
 
 class AdminService
 {
@@ -18,23 +11,23 @@ class AdminService
         try {
             // Obter todos os orçamentos de projeto de usuário com as relações
             $budgets = UserProjectBudgetType::with('userProjectBudget', 'type')->get();
-    
+
             // Filtrar os orçamentos removendo as chaves 'created_at' e 'updated_at'
             $filteredBudgets = $budgets->map(function ($budget) {
                 $filteredBudget = $budget->toArray();
                 unset($filteredBudget['created_at']);
                 unset($filteredBudget['updated_at']);
+
                 return $filteredBudget;
             });
-    
+
             // Retornar os orçamentos filtrados como um array
             return $filteredBudgets->toArray();
         } catch (\Exception $e) {
             // Lidar com exceção, se ocorrer algum erro durante o processo
-            throw new \Exception('Erro ao obter os orçamentos: ' . $e->getMessage());
+            throw new \Exception('Erro ao obter os orçamentos: '.$e->getMessage());
         }
     }
-    
 
     public function getFilteredBudgetForAdminParams($id)
     {
@@ -44,19 +37,16 @@ class AdminService
                 ->get()
                 ->map(function ($budget) {
                     $filteredBudgetArray = $budget->toArray();
-    
+
                     unset($filteredBudgetArray['created_at']);
                     unset($filteredBudgetArray['updated_at']);
-    
+
                     return $filteredBudgetArray;
                 });
-    
+
             return $filteredBudget->toArray();
         } catch (\Exception $e) {
-            throw new \Exception('Erro ao obter os orçamentos com ID ' . $id . ': ' . $e->getMessage());
+            throw new \Exception('Erro ao obter os orçamentos com ID '.$id.': '.$e->getMessage());
         }
     }
-    
-    
-    
 }

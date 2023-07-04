@@ -11,7 +11,6 @@ namespace App\Observers;
 
 use App\Models\Type;
 use App\Notifications\NewBudget;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class NomeDoObservador
@@ -30,7 +29,7 @@ class NomeDoObservador
     {
 
         $admin = 'noreplay@noreplay';
-    
+
         FacadesNotification::route('mail', $admin)
             ->notify(new NewBudget());
 

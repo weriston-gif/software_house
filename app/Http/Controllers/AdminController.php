@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\AdminService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -14,12 +13,14 @@ class AdminController extends Controller
     {
         $this->adminservice = $adminservice;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $data_users = $this->adminservice->getFilteredBudgetForAdmin();
+
         return view('admin.index')
             ->with('data_users', $data_users);
     }

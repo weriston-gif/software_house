@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Models\UserProjectBudgetType;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Validation\ValidationException;
 use App\Models\Type;
 use App\Models\UserProjectBudget;
+use App\Models\UserProjectBudgetType;
 use App\Notifications\NewBudget;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\ValidationException;
 
 class BudgetService
 {
@@ -22,13 +21,14 @@ class BudgetService
         }
 
         $valuePerPage = $typeModel->value_per_page;
-        $valuePageLogin = !empty($valuePageLogin) ? $valuePerPage : 0;
+        $valuePageLogin = ! empty($valuePageLogin) ? $valuePerPage : 0;
 
         $totalValue = ($valuePerPage * $valuePerPage) + $valuePageLogin;
 
         // Retorne a mensagem de sucesso
         return $totalValue;
     }
+
     public function getFilteredBudgetForUser($id)
     {
         try {
@@ -46,7 +46,7 @@ class BudgetService
 
             return $filteredBudget->toArray();
         } catch (\Exception $e) {
-            throw new \Exception('Erro ao obter os orçamentos com ID ' . $id . ': ' . $e->getMessage());
+            throw new \Exception('Erro ao obter os orçamentos com ID '.$id.': '.$e->getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ class BudgetService
             'license_access' => 'boolean',
             'final_budget_value' => 'required|numeric',
         ];
-    
+
         // Definir as mensagens de erro personalizadas
         $messages = [
             'user_project_budget_id.required' => 'O campo "ID do projeto" é obrigatório.',
@@ -103,10 +103,9 @@ class BudgetService
         return $budgetType->id;
     }
 
-    public function sendBuget($id)
+    public function sendBuget($email)
     {
-        $user = UserProjectBudget::findOrFail($id);
-        Notification::route('mail', $user->email)
+        Notification::route('mail', $email)
             ->notify(new NewBudget());
 
         return true;

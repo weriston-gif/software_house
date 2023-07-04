@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class BudgetRegistrationDesktopController extends Controller
 {
-
     protected $budgetService;
 
     public function __construct(BudgetService $budgetService)
@@ -49,7 +48,7 @@ class BudgetRegistrationDesktopController extends Controller
         $printer = $request->input('printer');
         $license_access = $request->input('license_access');
 
-        $type =3;
+        $type = 3;
 
         // Calcule o valor total usando o serviço 'BudgetService'
         $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin, $type);

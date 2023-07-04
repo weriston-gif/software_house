@@ -1,10 +1,10 @@
 <?php
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        $this->command->info("Usuário criado:");
+        $this->command->info('Usuário criado:');
         $this->command->info("Nome: $name");
         $this->command->info("E-mail: $email");
         $this->command->info("Senha: $password");

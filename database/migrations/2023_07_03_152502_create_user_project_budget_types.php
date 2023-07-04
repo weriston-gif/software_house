@@ -19,7 +19,6 @@ return new class extends Migration
 
             $table->bigInteger('value_total_page');
 
-
             $table->string('browser_support')->nullable();
             $table->string('platform')->nullable();
             $table->string('operational_system')->nullable();
@@ -31,11 +30,11 @@ return new class extends Migration
 
             $table->decimal('final_budget_value', 8, 2);
             $table->timestamps();
-        
+
             $table->foreign('user_project_budget_id')->references('id')->on('user_project_budgets')->onDelete('cascade'); // Alterado a referência para "user_project_budget"
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
-        
+
     }
 
     /**

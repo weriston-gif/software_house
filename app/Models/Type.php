@@ -8,30 +8,36 @@ use Illuminate\Database\Eloquent\Model;
 class Type extends Model
 {
     use HasFactory;
+
     const BROWSER_SUPPORTS_FIREFOX = 1;
+
     const BROWSER_SUPPORTS_CHROME = 2;
+
     const BROWSER_SUPPORTS_BLIND = 3;
 
     const BROWSER_SUPPORTS_PLATFORM_ANDROID = 1;
+
     const BROWSER_SUPPORTS_PLATFORM_IOS = 2;
+
     const BROWSER_SUPPORTS_PLATFORM_BOTH = 3;
 
     const OPERATIONAL_SYSTEM_LINUX = 1;
+
     const OPERATIONAL_SYSTEM_WINDOWS = 2;
+
     const OPERATIONAL_SYSTEM_MAC = 3;
+
     const TYPE_ONE = 1;
+
     const TYPE_TWO = 2;
+
     const TYPE_TREE = 3;
-
-
-
 
     protected $fillable = [
         'description',
         'value_page_login',
         'value_per_page',
     ];
-
 
     public static function arrayBrowserName()
     {
@@ -54,6 +60,7 @@ class Type extends Model
 
         return $browser;
     }
+
     public static function arrayOperacionalSystemName()
     {
         $system_operacional = [
@@ -64,7 +71,6 @@ class Type extends Model
 
         return $system_operacional;
     }
-
 
     public static function getAllTypes()
     {

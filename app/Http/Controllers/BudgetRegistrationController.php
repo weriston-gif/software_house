@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBudgetRequest;
-use App\Http\Requests\CreateBudgetTypeRequest;
 use App\Models\Type;
 use App\Models\UserProjectBudget;
-use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -21,6 +19,7 @@ class BudgetRegistrationController extends Controller
     {
         $this->budgetService = $budgetService;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -54,11 +53,11 @@ class BudgetRegistrationController extends Controller
             Session::put('budgetId', $budget->id);
 
             return redirect()->route('cadastro-orcamento.index')->with([
-                'success' => 'Dados criados com sucesso. Envie o orçamento para o e-mail: ' . $request->email,
+                'success' => 'Dados criados com sucesso. Envie o orçamento para o e-mail: '.$request->email,
                 'budgetId' => $budget->id,
             ]);
         } catch (Throwable $e) {
-            return redirect()->back()->with('error', 'Erro ao criar o budget: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao criar o budget: '.$e->getMessage());
         }
     }
 
@@ -69,11 +68,9 @@ class BudgetRegistrationController extends Controller
     {
         $data_user = $this->budgetService->getFilteredBudgetForUser($register);
 
-
-        if (!$data_user) {
+        if (! $data_user) {
             abort(404, 'Registro não encontrado.');
         }
-
 
         // Retorna a visualização 'budget.show' passando as variáveis $data_users
         return view('budget.show', compact('data_user'));
@@ -82,39 +79,22 @@ class BudgetRegistrationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id, $register)
-    {
-        $data = $request->validated();
-        dd($data);
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 
     public function sendBudget($id)
     {
         try {
             // Chame a sua Service para enviar o orçamento
-            $this->budgetService->sendBuget($id);
+            $user = UserProjectBudget::findOrFail($id);
+
+            $this->budgetService->sendBuget($user->email);
 
             // Defina a mensagem de sucesso na sessão
             Session::flash('success', 'Orçamento enviado com sucesso.');
         } catch (\Exception $e) {
             // Em caso de erro, defina a mensagem de erro na sessão
-            Session::flash('error', 'Ocorreu um erro ao enviar o orçamento: ' . $e->getMessage());
+            Session::flash('error', 'Ocorreu um erro ao enviar o orçamento: '.$e->getMessage());
         }
 
         // Redirecione para a mesma tela

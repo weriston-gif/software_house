@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Services\BudgetService;
+use Illuminate\Support\ServiceProvider;
 
 class BudgetServiceProvider extends ServiceProvider
 {
