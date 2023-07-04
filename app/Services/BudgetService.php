@@ -60,7 +60,7 @@ class BudgetService
             'platform' => 'string',
             'browser_support' => 'string',
             'operational_system' => 'string',
-            'value_page_login' => 'integer|string',
+            'value_page_login' => 'string',
             'system_pay' => 'integer',
             'printer' => 'boolean',
             'license_access' => 'boolean',
@@ -69,8 +69,8 @@ class BudgetService
 
         // Definir as mensagens de erro personalizadas
         $messages = [
-            'user_project_budget_id.required' => 'O campo "ID do projeto" é obrigatório.',
-            'user_project_budget_id.exists' => 'O ID do projeto não foi encontrado.',
+            'user_project_budget_id.required' => 'O campo "ID do usuário" é obrigatório.',
+            'user_project_budget_id.exists' => 'O ID do usuário não foi encontrado.',
             'type_id.required' => 'O campo "ID do tipo" é obrigatório.',
             'type_id.exists' => 'O ID do tipo não foi encontrado.',
             'platform.required' => 'O campo "Plataforma" é obrigatório.',

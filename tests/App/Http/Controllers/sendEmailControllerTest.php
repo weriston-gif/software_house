@@ -26,7 +26,7 @@ class sendEmailControllerTest extends TestCase
         $userProjectBudgetType = UserProjectBudgetType::factory()->create(['user_project_budget_id' => $user->id]);
 
         // Execute a notificação passando o ID do UserProjectBudget criado
-        $response = $this->post("/send-email/{$user->id}");
+        $response = $this->post("cadastro-orcamento-send/{$user->id}");
 
         // Verifique se a resposta tem status 302 (redirecionamento)
         $response->assertStatus(302); // Ele se dá esse status pois ele volta para tela de orçamentos

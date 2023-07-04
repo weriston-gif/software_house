@@ -30,6 +30,33 @@ class BudgetRegistrationController extends Controller
         return view('budget.index', compact('type'));
     }
 
+    public function indexDesktop(): View
+    {
+        $supportsName = Type::arrayOperacionalSystemName();
+
+        return view('budget.budget-desktop')
+            ->with('supportsName', $supportsName);
+    }
+
+    
+    public function indexMobile(): View
+    {
+        $supportsName = Type::arraySupportsName();
+
+        return view('budget.budget-mobile')
+            ->with('supportsName', $supportsName);
+    }
+    
+
+    public function indexWeb(): View
+    {
+        $supportsName = Type::arrayBrowserName();
+
+        return view('budget.budget-web')
+            ->with('supportsName', $supportsName);
+    }
+    
+
     /**
      * Show the form for creating a new resource.
      */
