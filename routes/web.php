@@ -7,7 +7,6 @@ use App\Http\Controllers\BudgetRegistrationMobileController;
 use App\Http\Controllers\BudgetRegistrationWebController;
 use App\Http\Controllers\BudgetRegistrationDesktopController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\WhatsAppController;
 
 
 
@@ -35,8 +34,8 @@ Route::resource('cadastro-orcamento-mobile', BudgetRegistrationMobileController:
 Route::resource('cadastro-orcamento-web', BudgetRegistrationWebController::class);
 Route::resource('cadastro-orcamento-desktop', BudgetRegistrationDesktopController::class);
 
-Route::patch('cadastro-orcamento/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'update'])->name('cadastro-orcamento.update');
 Route::get('cadastro-orcamento-result/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'show'])->name('budget.show');
+Route::post('/cadastro-orcamento/{id}', [BudgetRegistrationController::class, 'sendBudget'])->name('enviar-orcamento');
 
 
 

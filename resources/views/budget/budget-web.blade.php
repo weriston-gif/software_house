@@ -1,18 +1,28 @@
 <x-guest-layout>
-@section('title', 'Orçamento de Desktop.')
+    @section('title', 'Orçamento de Desktop.')
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
 
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-web.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">
-                    <label for="platform" class="block">Qual sistema operacional:</label>
-                    <select name="platform" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="platform">
+                    <label for="browser_support" class="block">Qual browser:</label>
+                    <select name="browser_support" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="browser_support">
                         @foreach ($supportsName as $valor => $nome)
                         <option value="{{ $nome }}">{{ $nome }}</option>
                         @endforeach
                     </select>
-                    @error('platform')
+                    @error('browser_support')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
@@ -25,30 +35,17 @@
                 </div>
                 <div class="col-6">
                     <label for="value_page_login" class="block">Terá tela de login: </label>
-                    <select name="value_page_login" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="value_page_login">
-                        <option value="1">Sim </option>
-                        <option value="2">Não </option>
-                    </select>
+                    <input type="hidden" name="value_page_login" value="0">
+                    <input type="checkbox" name="value_page_login" value="1" id="value_page_login">
                     @error('value_page_login')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="col-6">
                     <label for="system_pay" class="block">Terá tela de pagamento: </label>
-                    <select name="system_pay" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="system_pay">
-                        <option value="1">Sim </option>
-                        <option value="2">Não </option>
-                    </select>
-                    @error('system_pay')
-                    <span style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="col-6">
-                    <label for="system_pay" class="block">Terá tela de pagamento: </label>
-                    <select name="system_pay" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="system_pay">
-                        <option value="1">Sim </option>
-                        <option value="2">Não </option>
-                    </select>
+                    <input type="hidden" name="system_pay" value="0">
+                    <input type="checkbox" name="system_pay" value="1" id="system_pay">
                     @error('system_pay')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror

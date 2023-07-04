@@ -59,7 +59,7 @@ class BudgetRegistrationMobileController extends Controller
         $type = 2;
 
         // Calcule o valor total usando o serviço 'BudgetService'
-        $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin);
+        $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin,$type);
 
         // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'
         $data_mobile = [
@@ -75,8 +75,7 @@ class BudgetRegistrationMobileController extends Controller
 
         // Redirecione para a action 'show' com o ID do orçamento
         return redirect()->route('budget.show', [
-            'cadastro_orcamento' => $idValidate,
-            'register' => $register,
+            'cadastro_orcamento' => $register,
         ]);
     }
 

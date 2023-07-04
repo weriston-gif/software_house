@@ -19,15 +19,19 @@ class Type extends Model
     const OPERATIONAL_SYSTEM_LINUX = 1;
     const OPERATIONAL_SYSTEM_WINDOWS = 2;
     const OPERATIONAL_SYSTEM_MAC = 3;
+    const TYPE_ONE = 1;
+    const TYPE_TWO = 2;
+    const TYPE_TREE = 3;
 
 
-    
+
+
     protected $fillable = [
         'description',
         'value_page_login',
         'value_per_page',
     ];
-  
+
 
     public static function arrayBrowserName()
     {

@@ -17,6 +17,7 @@ class UserProjectBudgetType extends Model
         'value_total_page',
         'browser_support',
         'platform',
+        'page_login',
         'operational_system',
         'printer',
         'license_access',

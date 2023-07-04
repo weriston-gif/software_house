@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('operational_system')->nullable();
 
             $table->boolean('printer')->default(0);
+            $table->boolean('page_login')->default(0);
             $table->boolean('license_access')->default(0);
             $table->boolean('system_pay')->default(0);
 

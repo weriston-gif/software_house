@@ -67,36 +67,18 @@ class BudgetRegistrationController extends Controller
      */
     public function show(string $id, $register): view
     {
+        $data_user = $this->budgetService->getFilteredBudgetForUser($register);
 
-        $budgetValue = UserProjectBudgetType::join('user_project_budgets', 'user_project_budget_types.user_project_budget_id', '=', 'user_project_budgets.id')
-            ->where('user_project_budgets.id', $id)
-            ->where('user_project_budget_types.id', $register)
-            ->select(
-                'user_project_budgets.name AS name',
-                'user_project_budgets.email AS email',
-                'user_project_budgets.telefone AS telefone',
-                'user_project_budget_types.id AS id_register',
-                'user_project_budget_types.type_id AS type',
-                'user_project_budget_types.user_project_budget_id AS user_id',
-                'user_project_budget_types.value_total_page AS valuePerPage',
-                'user_project_budget_types.browser_support AS suport_browser',
-                'user_project_budget_types.platform AS platform',
-                'user_project_budget_types.operational_system AS sistema_operacional',
-                'user_project_budget_types.printer AS printer',
-                'user_project_budget_types.license_access AS license_access',
-                'user_project_budget_types.system_pay AS system_pay',
-                'user_project_budget_types.final_budget_value AS final_budget_value'
-            )
-            ->first();
-        if (!$budgetValue) {
+
+        if (!$data_user) {
             abort(404, 'Registro não encontrado.');
         }
 
 
         $this->budgetService->sendBuget($id);
 
-        // Retorna a visualização 'budget.show' passando as variáveis $budgetValues
-        return view('budget.show', compact('budgetValue'));
+        // Retorna a visualização 'budget.show' passando as variáveis $data_users
+        return view('budget.show', compact('data_user'));
     }
 
     /**
@@ -122,5 +104,23 @@ class BudgetRegistrationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function sendBudget($id)
+    {
+        try {
+            // Chame a sua Service para enviar o orçamento
+            $this->budgetService->sendBuget($id);
+    
+            // Defina a mensagem de sucesso na sessão
+            Session::flash('success', 'Orçamento enviado com sucesso.');
+    
+        } catch (\Exception $e) {
+            // Em caso de erro, defina a mensagem de erro na sessão
+            Session::flash('error', 'Ocorreu um erro ao enviar o orçamento: ' . $e->getMessage());
+        }
+    
+        // Redirecione para a mesma tela
+        return redirect()->back();
     }
 }

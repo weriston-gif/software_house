@@ -23,19 +23,8 @@ class BudgetRegistrationWebController extends Controller
     public function index()
     {
         $supportsName = Type::arrayBrowserName();
-
-
-
         return view('budget.budget-web')
             ->with('supportsName', $supportsName);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,66 +32,45 @@ class BudgetRegistrationWebController extends Controller
      */
     public function store(CreateBudgetTypeRequest $request)
     {
-            // Se a validação passou, obtenha os valores do request
+        try {
+            // Obtenha os valores do request
             $valuePerPage = $request->input('value_per_page');
             $valuePageLogin = $request->input('value_page_login');
+            $systemPay = $request->input('system_pay');
             $idValidate = $request->input('value');
             $browser_support = $request->input('browser_support');
-            $systemPay = $request->input('system_pay');
             $type = 1;
-         
 
             // Calcule o valor total usando o serviço 'BudgetService'
-            $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin);
-    
+            $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin, $type);
+
             // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'
             $data_mobile = [
                 'user_project_budget_id' => $idValidate,
+                'valuePerPage' => $valuePerPage,
                 'type_id' => $type,
                 'browser_support' => $browser_support,
                 'value_page_login' => $valuePageLogin,
                 'system_pay' => $systemPay,
                 'final_budget_value' => $totalValue,
             ];
-    
+
             $register = $this->budgetService->registerBudget($data_mobile);
-    
-            // Redirecione para a action 'show' com o ID do orçamento
-            return redirect()->route('budget.show', [
-                'cadastro_orcamento' => $idValidate,
-                'register' => $register,
-            ]);
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            // Verifique se o registro foi bem-sucedido antes de redirecionar
+            if ($register) {
+                // Redirecione para a action 'show' com o ID do orçamento
+                return redirect()->route('budget.show', [
+                    'cadastro_orcamento' => $idValidate,
+                    'register' => $register,
+                ])->with('success', 'Envio bem-sucedido. Orçamento Web registrado com sucesso.');
+            } else {
+                // Retorne para a mesma tela com uma mensagem de erro
+                return redirect()->back()->with('error', 'Erro no registro do orçamento.');
+            }
+        } catch (\Exception $exception) {
+            // Retorne para a mesma tela com uma mensagem de erro
+            return redirect()->back()->with('error', 'Erro no envio: ' . $exception->getMessage());
+        }
     }
 }

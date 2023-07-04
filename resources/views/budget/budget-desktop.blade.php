@@ -1,18 +1,18 @@
 <x-guest-layout>
-@section('title', 'Orçamento de Mobile.')
+@section('title', 'Orçamento de Desktop.')
 
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-desktop.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-6">
-                    <label for="platform" class="block">Qual plataforma:</label>
-                    <select name="platform" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="platform">
+                <div class="col-12">
+                    <label for="operational_system" class="block">Qual sistema operacional:</label>
+                    <select type="text" name="operational_system" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="operational_system">
                         @foreach ($supportsName as $valor => $nome)
                         <option value="{{ $nome }}">{{ $nome }}</option>
                         @endforeach
                     </select>
-                    @error('platform')
+                    @error('operational_system')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
@@ -33,13 +33,28 @@
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-6">
-                    <label for="system_pay" class="block">Terá tela de pagamento: </label>
-                    <input type="checkbox" name="system_pay" value="" id="system_pay">
-                    @error('system_pay')
+                <div class="col-12">
+                    <label for="printer" class="block">Terá acesso há impressora: </label>
+                    <select name="printer" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="printer">
+                        <option value="1">Sim </option>
+                        <option value="2">Não </option>
+                    </select>
+                    @error('printer')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="col-12">
+                    <label for="license_access" class="block">Terá licença de acesso: </label>
+                    <select name="license_access" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="license_access">
+                        <option value="1">Sim </option>
+                        <option value="2">Não </option>
+                    </select>
+                    @error('license_access')
+                    <span style="color: red;">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                
             </div>
             <input type="hidden" id="hidden-input" id="value" name="value">
             <div class="flex justify-end mt-3">
