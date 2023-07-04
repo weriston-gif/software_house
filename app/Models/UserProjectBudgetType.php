@@ -23,15 +23,16 @@ class UserProjectBudgetType extends Model
         'system_pay',
         'final_budget_value',
     ];
-    
+
+
 
     public function userProjectBudget()
     {
-        return $this->belongsTo(UserProjectBudget::class, 'user_project_budget_id', 'id');
+        return $this->belongsTo(UserProjectBudget::class, 'user_project_budget_id');
     }
 
     public function type()
     {
-        return $this->belongsTo(Type::class, 'type_id', 'id');
+        return $this->belongsTo(Type::class, 'type_id');
     }
 }

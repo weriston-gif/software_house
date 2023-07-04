@@ -6,7 +6,8 @@ use App\Http\Controllers\BudgetRegistrationController;
 use App\Http\Controllers\BudgetRegistrationMobileController;
 use App\Http\Controllers\BudgetRegistrationWebController;
 use App\Http\Controllers\BudgetRegistrationDesktopController;
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WhatsAppController;
 
 
 
@@ -37,14 +38,19 @@ Route::resource('cadastro-orcamento-desktop', BudgetRegistrationDesktopControlle
 Route::patch('cadastro-orcamento/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'update'])->name('cadastro-orcamento.update');
 Route::get('cadastro-orcamento-result/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'show'])->name('budget.show');
 
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::resource('admin', AdminController::class);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

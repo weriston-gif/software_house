@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBudgetRequest;
+use App\Http\Requests\CreateBudgetTypeRequest;
 use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
@@ -109,9 +110,10 @@ class BudgetRegistrationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id, $register)
     {
-        dd('aqui');
+        $data = $request->validated();
+        dd($data);
     }
 
     /**

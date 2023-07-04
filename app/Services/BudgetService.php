@@ -13,10 +13,10 @@ use App\Notifications\NewBudget;
 
 class BudgetService
 {
-    public function calculateTotalValueMobile(int $valuePerPage, int $value_page_login): float
+    public function calculateTotalValue(int $valuePerPage, int $value_page_login, $type): float
     {
         try {
-            $type = Type::findOrFail(1);
+            $type = Type::findOrFail($type);
         } catch (ModelNotFoundException $exception) {
             throw new \Exception('Tipo de valor da página de login não encontrado.', 404, $exception);
         }

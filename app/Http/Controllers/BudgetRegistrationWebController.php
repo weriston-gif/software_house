@@ -53,7 +53,7 @@ class BudgetRegistrationWebController extends Controller
          
 
             // Calcule o valor total usando o serviço 'BudgetService'
-            $totalValue = $this->budgetService->calculateTotalValueMobile($valuePerPage, $valuePageLogin);
+            $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin);
     
             // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'
             $data_mobile = [

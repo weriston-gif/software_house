@@ -2,8 +2,7 @@
     @section('title', 'Informações de orçamento')
     <a href="{{route('cadastro-orcamento.index')}}" class="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-primary-900 shadow-sm hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Voltar</a>
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento.update', ['cadastro_orcamento' => $budgetValue->user_id], ['register' => $budgetValue->id_register]) }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form class="w-full" action="{{ route('cadastro-orcamento.update', ['cadastro_orcamento' => $budgetValue->user_id, 'register' => $budgetValue->id_register]) }}" method="POST" enctype="multipart/form-data"> @csrf
             @method('PATCH')
             <div class="row">
 
@@ -76,6 +75,7 @@
                     <input disabled type="text" name="final_budget_value" id="final_budget_value" value="{{ $budgetValue->final_budget_value ?? '' }}" class="w-full rounded-md p-2 border border-gray-300">
                     <!-- Mostrar mensagem de erro se houver -->
                 </div>
+                <input type="hidden" id="value" id="{{ $budgetValue->user_id }}" name="value">
 
 
             </div>
