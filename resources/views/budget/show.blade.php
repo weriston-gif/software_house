@@ -82,17 +82,18 @@
 
                 {{ $type['type']['description'] }}
             </div>
-           
+
             @endforeach
         </div>
         <div class="row">
             <p class="h2">Dados Orçamentos</p>
-
+          
             @foreach ($data_user as $budget)
+
             <div class="col-3">
                 <p style="color: #0d6efd;">Sistema Operacional:</p>
 
-                {{ $budget['operational_system'] == 0 ? 'Não' : budget['operational_system'] }}
+                {{ $budget['operational_system'] == 0 ? 'Não' :  $budget['operational_system']  }}
             </div>
             <div class="col-3">
                 <p style="color: #0d6efd;">Valor total de página:</p>

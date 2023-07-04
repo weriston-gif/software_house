@@ -36,6 +36,7 @@ class BudgetRegistrationMobileController extends Controller
         $type = $request->input('type');
 
         $browserSupport = $browserSupport ?? '0';
+        $valuePageLogin = $valuePageLogin ?? '0';
         $platform = $platform ?? '0';
         $operationalSystem = $operationalSystem ?? '0';
         $valuePerPage = $valuePerPage ?? 0;
@@ -96,7 +97,6 @@ class BudgetRegistrationMobileController extends Controller
             $platform = $values['platform'];
             $type = $values['type'];
 
-            dd($valuePageLogin);
             // Calcule o valor total usando o serviço 'BudgetService'
             $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin, $type);
             // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'

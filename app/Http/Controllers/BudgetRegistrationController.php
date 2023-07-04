@@ -75,8 +75,6 @@ class BudgetRegistrationController extends Controller
         }
 
 
-        $this->budgetService->sendBuget($id);
-
         // Retorna a visualização 'budget.show' passando as variáveis $data_users
         return view('budget.show', compact('data_user'));
     }
@@ -111,15 +109,14 @@ class BudgetRegistrationController extends Controller
         try {
             // Chame a sua Service para enviar o orçamento
             $this->budgetService->sendBuget($id);
-    
+
             // Defina a mensagem de sucesso na sessão
             Session::flash('success', 'Orçamento enviado com sucesso.');
-    
         } catch (\Exception $e) {
             // Em caso de erro, defina a mensagem de erro na sessão
             Session::flash('error', 'Ocorreu um erro ao enviar o orçamento: ' . $e->getMessage());
         }
-    
+
         // Redirecione para a mesma tela
         return redirect()->back();
     }
