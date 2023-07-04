@@ -1,18 +1,18 @@
 <x-guest-layout>
-    @section('title', 'Orçamento de Web.')
+@section('title', 'Orçamento de Desktop.')
 
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-web.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">
-                    <label for="browser_support" class="block">Qual Browser:</label>
-                    <select name="browser_support" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="browser_support">
+                    <label for="platform" class="block">Qual sistema operacional:</label>
+                    <select name="platform" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="platform">
                         @foreach ($supportsName as $valor => $nome)
                         <option value="{{ $nome }}">{{ $nome }}</option>
                         @endforeach
                     </select>
-                    @error('browser_support')
+                    @error('platform')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
@@ -43,7 +43,16 @@
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-                
+                <div class="col-6">
+                    <label for="system_pay" class="block">Terá tela de pagamento: </label>
+                    <select name="system_pay" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="system_pay">
+                        <option value="1">Sim </option>
+                        <option value="2">Não </option>
+                    </select>
+                    @error('system_pay')
+                    <span style="color: red;">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
             <input type="hidden" id="hidden-input" id="value" name="value">
             <div class="flex justify-end mt-3">

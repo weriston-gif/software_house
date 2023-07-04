@@ -36,8 +36,6 @@
     <script>
     function confirm(button) {
         var id = button.getAttribute('data-attr');
-        alert(id);
-
         sessionStorage.setItem('id', id);
     }
 

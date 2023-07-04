@@ -34,13 +34,13 @@ class BudgetService
         $rules = [
             'user_project_budget_id' => 'required',
             'type_id' => 'required|exists:types,id',
-
+            'valuePerPage' => 'integer|required' ,
             'platform' => 'string',
             'browser_support' => 'string',
             'operational_system' => 'string',
-            
+
             'value_page_login' => 'integer|string',
-            'system_pay' => 'integer|string',
+            'system_pay' => 'integer',
             'printer' => 'integer|string',
             'license_access' => 'integer|string',
             'final_budget_value' => 'required|numeric',
@@ -69,7 +69,7 @@ class BudgetService
         $budgetType = new UserProjectBudgetType();
         $budgetType->user_project_budget_id = $data['user_project_budget_id'];
         $budgetType->type_id = $data['type_id'];
-
+        $budgetType->value_total_page = $data['valuePerPage'];
         // Usar o operador de coalescência nula (null coalescing operator) para definir os valores padrão
         $budgetType->platform = $data['platform'] ?? 0;
         $budgetType->browser_support = $data['browser_support'] ?? 0;

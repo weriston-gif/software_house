@@ -33,9 +33,8 @@ class BudgetRegistrationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
-        return view('budget.create');
     }
 
     /**
@@ -65,16 +64,20 @@ class BudgetRegistrationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, $register)
+    public function show(string $id, $register): view
     {
 
-        $budgetValues = UserProjectBudgetType::join('user_project_budgets', 'user_project_budget_types.user_project_budget_id', '=', 'user_project_budgets.id')
+        $budgetValue = UserProjectBudgetType::join('user_project_budgets', 'user_project_budget_types.user_project_budget_id', '=', 'user_project_budgets.id')
             ->where('user_project_budgets.id', $id)
             ->where('user_project_budget_types.id', $register)
             ->select(
                 'user_project_budgets.name AS name',
                 'user_project_budgets.email AS email',
                 'user_project_budgets.telefone AS telefone',
+                'user_project_budget_types.id AS id_register',
+                'user_project_budget_types.type_id AS type',
+                'user_project_budget_types.user_project_budget_id AS user_id',
+                'user_project_budget_types.value_total_page AS valuePerPage',
                 'user_project_budget_types.browser_support AS suport_browser',
                 'user_project_budget_types.platform AS platform',
                 'user_project_budget_types.operational_system AS sistema_operacional',
@@ -83,9 +86,8 @@ class BudgetRegistrationController extends Controller
                 'user_project_budget_types.system_pay AS system_pay',
                 'user_project_budget_types.final_budget_value AS final_budget_value'
             )
-            ->get();
-
-        if (!$budgetValues) {
+            ->first();
+        if (!$budgetValue) {
             abort(404, 'Registro não encontrado.');
         }
 
@@ -93,7 +95,7 @@ class BudgetRegistrationController extends Controller
         $this->budgetService->sendBuget($id);
 
         // Retorna a visualização 'budget.show' passando as variáveis $budgetValues
-        return view('budget.show', compact('budgetValues'));
+        return view('budget.show', compact('budgetValue'));
     }
 
     /**
@@ -109,7 +111,7 @@ class BudgetRegistrationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd('aqui');
     }
 
     /**

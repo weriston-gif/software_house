@@ -14,6 +14,7 @@ class UserProjectBudgetType extends Model
     protected $fillable = [
         'user_project_budget_id',
         'type_id',
+        'value_total_page',
         'browser_support',
         'platform',
         'operational_system',

@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-6">
                     <label for="telefone" class="block">Telefone:</label>
-                    <input type="text" name="telefone" value="telefone" id="telefone" class="w-full rounded-md p-2 border border-gray-300" placeholder="+55 9999-9999">
+                    <input type="text" name="telefone" value="" id="telefone" class="w-full rounded-md p-2 border border-gray-300" placeholder="+55 9999-9999">
                     @error('telefone')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
@@ -139,16 +139,15 @@ $botton = '<div class="d-flex justify-content-center">
         <a href="' . route('cadastro-orcamento-mobile.index') . '">Mobile</a>
     </button>
     <button onclick="confirm(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('cadastro-orcamento-mobile.index') . '">Desktop</a>
+        <a href="' . route('cadastro-orcamento-desktop.index') . '">Desktop</a>
     </button>
 </div>';
 @endphp
 <script>
     let botton = `{!! $botton !!}`;
-
     Swal.fire({
-        title: 'Success!',
-        text: "{{ session('budgetId') }}",
+        title: 'Sucesso!',
+        text: 'Seus dados foram salvos com sucesso.  Agora selecione o tipo de sistema que gostaria de orçamenta',
         icon: 'success',
         showConfirmButton: false,
         footer: botton,
