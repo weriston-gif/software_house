@@ -24,13 +24,7 @@ Route::get('/', function () {
 });
 
 Route::resource('cadastro-orcamento-tipo', BudgetRegistrationTypeController::class);
-
-
-Route::get('cadastro-orcamento-result/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'show'])
-    ->name('budget.show');
-
-Route::resource('cadastro-orcamento', BudgetRegistrationController::class)
-    ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
+Route::resource('cadastro-orcamento', BudgetRegistrationController::class);
 
 Route::get('cadastro-orcamento-desktop', [BudgetRegistrationController::class, 'indexDesktop'])
     ->name('cadastro-orcamento-desktop');

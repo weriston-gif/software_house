@@ -2,12 +2,11 @@
 
 namespace App\Observers;
 
-
 use App\Models\Type;
 use App\Notifications\NewBudget;
 use Illuminate\Support\Facades\Notification;
 
-class TypeObservador
+class TypeObserver
 {
     public function created(Type $modelo)
     {
@@ -21,7 +20,6 @@ class TypeObservador
 
     public function deleted(Type $modelo)
     {
-
         $admin = 'noreplay@noreplay';
 
         Notification::route('mail', $admin)

@@ -4,6 +4,7 @@ use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
@@ -43,4 +44,31 @@ class BudgetServiceTest extends TestCase
         $this->assertArrayNotHasKey('created_at', $result);
         $this->assertArrayNotHasKey('updated_at', $result);
     }
+
+
+
+    public function testCalculateTotalValue()
+    {
+        // Cria uma instância do serviço
+        $service = new BudgetService();
+    
+        // Cria um modelo Type fictício para usar no teste
+        $type = Type::factory()->create([
+            'value_per_page' => 10.3,
+            'value_page_login' => 19.5,
+        ]);
+    
+        // Chama o método calculateTotalValue com os valores de teste
+        $valuePerPage = 10;
+        $valuePageLogin = 1;
+        $totalValue = $service->calculateTotalValue($valuePerPage, $valuePageLogin, $type->id);
+    
+        // Verifica se o valor total calculado está correto
+        $expectedTotalValue = ($type->value_per_page * $valuePerPage) + $type->value_page_login;
+        $this->assertEquals($expectedTotalValue, $totalValue);
+    }
+    
+    
+    
+    
 }

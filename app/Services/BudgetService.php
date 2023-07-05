@@ -20,6 +20,7 @@ class BudgetService
         } catch (ModelNotFoundException $exception) {
             throw new \Exception('Tipo de valor da página de login não encontrado.', 404, $exception);
         }
+
         $valuePerPage_in_bd = $typeModel->value_per_page;
         $valuePerPage_login_in_bd = $typeModel->value_page_login;
 
@@ -52,7 +53,7 @@ class BudgetService
         }
     }
 
-    public function updateBudgetForUser($idUserProject, $idUserProjectType, array $dataUserPersona, array $dataUserTypes)
+    public function updateBudgetForUserType($idUserProject, $idUserProjectType, array $dataUserPersona, array $dataUserTypes)
     {
         try {
             DB::beginTransaction();

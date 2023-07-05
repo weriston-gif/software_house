@@ -178,7 +178,7 @@ class BudgetRegistrationTypeController extends Controller
                 'browser_support' => $browserSupport,
             ];
 
-            $this->budgetService->updateBudgetForUser($data_user['id'], $data_user['idBudget'], $data_user_persona, $data_user_types);
+            $this->budgetService->updateBudgetForUserType($data_user['id'], $data_user['idBudget'], $data_user_persona, $data_user_types);
 
 
             // Retornar uma resposta de sucesso, redirecionar ou fazer qualquer outra coisa necessária

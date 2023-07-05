@@ -2,10 +2,15 @@
 
 namespace Tests\App\Http\Controllers;
 
+use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
+use App\Notifications\NewBudget;
+use App\Observers\TypeObserver;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 
@@ -33,5 +38,23 @@ class sendEmailControllerTest extends TestCase
 
         // Verifique se a mensagem de sucesso está presente na sessão
         $this->assertEquals('Orçamento enviado com sucesso.', session('success'));
+    }
+
+    public function testDeletedMethod()
+    {
+        // Cria uma instância do modelo Type para usar no teste
+        $type = new Type();
+
+        // Configura o comportamento esperado do Notification facade
+        Notification::fake();
+
+        // Cria uma instância do observer
+        $observer = new TypeObserver();
+
+        // Chama o método deleted passando o modelo Type
+        $result = $observer->deleted($type);
+
+        // Verifica as asserções do teste
+        $this->assertTrue($result);
     }
 }
