@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-6">
                     <label for="platform" class="block">Qual plataforma:</label>
-                    <input type="platform" name="platform" id="platform" placeholder="Quais plataformas...">
+                    <input type="platform" name="platform" id="platform" placeholder="Quais plataformas..." class="w-full rounded-md p-2 border border-gray-300">
 
                     @error('platform')
                     <span style="color: red;">{{ $message }}</span>

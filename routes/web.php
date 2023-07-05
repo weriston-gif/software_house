@@ -5,6 +5,8 @@ use App\Http\Controllers\BudgetRegistrationController;
 use App\Http\Controllers\BudgetRegistrationTypeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminMiddleware;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +45,8 @@ Route::post('cadastro-orcamento-send/{id}', [BudgetRegistrationController::class
     ->name('enviar-orcamento');
 
 
+Route::resource('admin', AdminController::class)
+->middleware(AdminMiddleware::class);
 
 
 Route::get('/dashboard', function () {
@@ -51,7 +55,6 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::resource('admin', AdminController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

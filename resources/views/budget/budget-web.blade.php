@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-6">
                     <label for="browser_support" class="block">Qual browser:</label>
-                   <input type="text" name="browser_support" id="browser_support" placeholder="Quais browser">
+                   <input type="text" name="browser_support" id="browser_support" placeholder="Quais browser" class="w-full rounded-md p-2 border border-gray-300">
                     @error('browser_support')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <input type="hidden" id="hidden-input" id="value" name="value">
-            <input type="hidden" id="type" name="type" value="3">
+            <input type="hidden" id="type" name="type" value="1">
 
             <div class="flex justify-end mt-3">
                 <button type="submit" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Cadastrar-se</button>
