@@ -3,6 +3,7 @@
 use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
+use App\Notifications\NewBudget;
 use App\Services\BudgetService;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
@@ -100,28 +101,38 @@ class BudgetServiceTest extends TestCase
             'browser_support' => 'Some browser support', // Insira aqui o valor correto para $browserSupport
         ];
 
+        $email = 'test@example.com';
 
         // Mock da classe Notification
         Notification::fake();
-
+        
         // Chama o método updateBudgetForUserType com os dados de teste
         $service = new BudgetService();
         $result = $service->updateBudgetForUserType($budgetUser->id, $budgetUserType->id, $dataUserPersona, $dataUserTypes);
-
+        
         // Verifica se o método retornou true (ou seja, a atualização foi bem-sucedida)
         $this->assertTrue($result);
-
+        
         // Verifica se o UserProjectBudget foi atualizado corretamente
         $updatedBudgetUser = UserProjectBudget::findOrFail($budgetUser->id);
         $this->assertEquals($dataUserPersona['name'], $updatedBudgetUser->name);
         $this->assertEquals($dataUserPersona['email'], $updatedBudgetUser->email);
         // Verifique outros campos atualizados conforme necessário
-
+        
         // Verifica se o UserProjectBudgetType foi atualizado corretamente
         $updatedBudgetUserType = UserProjectBudgetType::findOrFail($budgetUserType->id);
         $this->assertEquals($dataUserTypes['type_id'], $updatedBudgetUserType->type_id);
         // Verifique outros campos atualizados conforme necessário
-
-     
+        
+        // Verifica se a notificação foi enviada por e-mail
+        Notification::assertSentToMail(
+            $updatedBudgetUser,
+            NewBudget::class,
+            function ($notification, $channels, $notifiable) use ($email) {
+                $mailMessage = $notification->toMail($notifiable);
+                return $channels === ['mail'] && $mailMessage->to[0]['address'] === $email;
+            }
+        );
+        
     }
 }
