@@ -12,7 +12,7 @@
     </div>
     @endif
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-tipo') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">

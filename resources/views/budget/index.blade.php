@@ -133,13 +133,13 @@
 @php
 $botton = '<div class="d-flex justify-content-center">
     <button onclick="confirm(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('cadastro-orcamento-web.index') . '">Web</a>
+        <a href="' . route('cadastro-orcamento-web') . '">Web</a>
     </button>
     <button onclick="confirm(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('cadastro-orcamento-mobile.index') . '">Mobile</a>
+        <a href="' . route('cadastro-orcamento-mobile') . '">Mobile</a>
     </button>
     <button onclick="confirm(this)" data-attr="' . session('budgetId') . '" type="button" class="btn btn-outline-primary mx-2">
-        <a href="' . route('cadastro-orcamento-desktop.index') . '">Desktop</a>
+        <a href="' . route('cadastro-orcamento-desktop') . '">Desktop</a>
     </button>
 </div>';
 @endphp

@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BudgetRegistrationController;
-use App\Http\Controllers\BudgetRegistrationDesktopController;
-use App\Http\Controllers\BudgetRegistrationMobileController;
-use App\Http\Controllers\BudgetRegistrationWebController;
+use App\Http\Controllers\BudgetRegistrationTypeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,9 +22,14 @@ Route::get('/', function () {
 });
 
 Route::resource('cadastro-orcamento', BudgetRegistrationController::class);
-Route::resource('cadastro-orcamento-mobile', BudgetRegistrationMobileController::class);
+Route::resource('cadastro-orcamento-tipo', BudgetRegistrationTypeController::class);
 Route::get('cadastro-orcamento-result/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'show'])->name('budget.show');
 Route::post('cadastro-orcamento-send/{id}', [BudgetRegistrationController::class, 'sendBudget'])->name('enviar-orcamento');
+Route::get('cadastro-orcamento-desktop', [BudgetRegistrationController::class, 'indexDesktop'])->name('cadastro-orcamento-desktop');
+Route::get('cadastro-orcamento-mobile', [BudgetRegistrationController::class, 'indexMobile'])->name('cadastro-orcamento-mobile');
+Route::get('cadastro-orcamento-web', [BudgetRegistrationController::class, 'indexWeb'])->name('cadastro-orcamento-web');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

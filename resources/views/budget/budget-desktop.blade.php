@@ -12,7 +12,7 @@
     </div>
     @endif
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-mobile.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-tipo.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-12">
@@ -30,14 +30,6 @@
                     <label for="value_per_page" class="block">Quantas telas: </label>
                     <input type="number" name="value_per_page" id="value_per_page" value="{{ old('value_per_page') ?? '' }}" class="w-full rounded-md p-2 border border-gray-300">
                     @error('value_per_page')
-                    <span style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="col-6">
-                    <label for="system_pay" class="block">Terá tela de pagamento: </label>
-                    <input type="hidden" name="system_pay" value="0">
-                    <input type="checkbox" name="system_pay" value="1" id="system_pay">
-                    @error('system_pay')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>

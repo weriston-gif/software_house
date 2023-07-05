@@ -121,11 +121,6 @@
                 {{ empty($budget['license_access']) ? 'Não' : 'Sim'  }}
             </div>
             <div class="col-3">
-                <p style="color: #0d6efd;">Licença de acesso:</p>
-
-                {{ empty($budget['license_access']) ? 'Não' : 'Sim'  }}
-            </div>
-            <div class="col-3">
                 <p style="color: #0d6efd;">Sistema de pagamento:</p>
 
                 {{ empty($budget['system_pay']) ? 'Não' : 'Sim'  }}
