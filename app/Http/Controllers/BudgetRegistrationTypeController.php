@@ -139,7 +139,6 @@ class BudgetRegistrationTypeController extends Controller
             $data_user = $request->validated();
             $values = $this->getRequestValues($request);
 
-
             $valuePerPage = $values['valuePerPage'];
             $valuePageLogin = $values['valuePageLogin'];
             $browserSupport = $values['browserSupport'];
@@ -168,10 +167,10 @@ class BudgetRegistrationTypeController extends Controller
             $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin, $type);
             $data_user_types = [
                 'final_budget_value' => $totalValue,
-                'valuePerPage' => $valuePerPage,
+                'value_total_page' => $valuePerPage,
                 'type_id' => $type,
                 'platform' => $platform,
-                'value_page_login' => $valuePageLogin,
+                'page_login' => $valuePageLogin,
                 'system_pay' => $systemPay,
                 'license_access' => $licenseAccess,
                 'printer' => $printer,
@@ -179,12 +178,11 @@ class BudgetRegistrationTypeController extends Controller
                 'browser_support' => $browserSupport,
             ];
 
-            $register = $this->budgetService->updateBudgetForUser($data_user['id'], $data_user['idBudget'], $data_user_persona, $data_user_types);
-            
-            dd($register);
-            // Lógica de atualização aqui
+            $this->budgetService->updateBudgetForUser($data_user['id'], $data_user['idBudget'], $data_user_persona, $data_user_types);
+
 
             // Retornar uma resposta de sucesso, redirecionar ou fazer qualquer outra coisa necessária
+            return redirect()->back()->with('success', 'Orçamento atualizado com sucesso! Enviamos para seu e-mail os dados');
         } catch (\Exception $e) {
             // Capturar a exceção e lidar com ela adequadamente
             // Por exemplo, você pode registrar a exceção, exibir uma mensagem de erro, redirecionar para uma página de erro, etc.

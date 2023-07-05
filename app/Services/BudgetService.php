@@ -52,29 +52,31 @@ class BudgetService
         }
     }
 
-    public function updateBudgetForUser($idUserProject, $IdUserProjectType, array $data_user_persona, array $data_user_types)
+    public function updateBudgetForUser($idUserProject, $idUserProjectType, array $dataUserPersona, array $dataUserTypes)
     {
-
-
-
         try {
-            
-            $budgetUser = UserProjectBudget::find($idUserProject);
-            $budgetUserType = UserProjectBudgetType::find($IdUserProjectType);
-            
-            if ($budgetUser) {
-                $budgetUser->fill($data_user_persona);
-                $budgetUser->save();
-            }
-            
-            if ($budgetUserType) {
-                $budgetUserType->fill($data_user_types);
-                $budgetUserType->save();
-            }
-            
+            DB::beginTransaction();
+
+            $budgetUser = UserProjectBudget::findOrFail($idUserProject);
+            $budgetUserType = UserProjectBudgetType::findOrFail($idUserProjectType);
+
+            $budgetUser->fill($dataUserPersona);
+            $budgetUser->save();
+
+            $budgetUserType->fill($dataUserTypes);
+            $budgetUserType->save();
+
+
+            Notification::route('mail',  $budgetUser->emai)
+                ->notify(new NewBudget());
+
+
+            DB::commit();
+
             return true;
         } catch (\Exception $e) {
-            throw new \Exception('Erro ao atualizar o orçamento com ID '  . ': ' . $e->getMessage());
+            DB::rollBack();
+            throw new \Exception('Erro ao atualizar o orçamento com ID ' . $idUserProject . ': ' . $e->getMessage());
         }
     }
 
