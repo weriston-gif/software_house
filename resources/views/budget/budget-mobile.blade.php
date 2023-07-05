@@ -17,11 +17,8 @@
             <div class="row">
                 <div class="col-6">
                     <label for="platform" class="block">Qual plataforma:</label>
-                    <select name="platform" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="platform">
-                        @foreach ($supportsName as $valor => $nome)
-                        <option value="{{ $nome }}">{{ $nome }}</option>
-                        @endforeach
-                    </select>
+                    <input type="platform" name="platform" id="platform" placeholder="Quais plataformas...">
+
                     @error('platform')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror

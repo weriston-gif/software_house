@@ -32,28 +32,21 @@ class BudgetRegistrationController extends Controller
 
     public function indexDesktop(): View
     {
-        $supportsName = Type::arrayOperacionalSystemName();
-
-        return view('budget.budget-desktop')
-            ->with('supportsName', $supportsName);
+    
+        return view('budget.budget-desktop');
     }
 
     
     public function indexMobile(): View
     {
-        $supportsName = Type::arraySupportsName();
-
-        return view('budget.budget-mobile')
-            ->with('supportsName', $supportsName);
+        return view('budget.budget-mobile');
     }
     
 
     public function indexWeb(): View
     {
-        $supportsName = Type::arrayBrowserName();
 
-        return view('budget.budget-web')
-            ->with('supportsName', $supportsName);
+        return view('budget.budget-web');
     }
     
 

@@ -12,16 +12,12 @@
     </div>
     @endif
     <div class="container d-flex justify-content-center mt-5">
-        <form class="w-full" action="{{ route('cadastro-orcamento-tipo') }}" method="POST" enctype="multipart/form-data">
+        <form class="w-full" action="{{ route('cadastro-orcamento-tipo.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">
                     <label for="browser_support" class="block">Qual browser:</label>
-                    <select name="browser_support" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="browser_support">
-                        @foreach ($supportsName as $valor => $nome)
-                        <option value="{{ $nome }}">{{ $nome }}</option>
-                        @endforeach
-                    </select>
+                   <input type="text" name="browser_support" id="browser_support" placeholder="Quais browser">
                     @error('browser_support')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror

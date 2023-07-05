@@ -17,11 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <label for="operational_system" class="block">Qual sistema operacional:</label>
-                    <select type="text" name="operational_system" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="operational_system">
-                        @foreach ($supportsName as $valor => $nome)
-                        <option value="{{ $nome }}">{{ $nome }}</option>
-                        @endforeach
-                    </select>
+                    <input type="operational_system" name="operational_system" id="operational_system" placeholder="Quais sistema operacionais...">
                     @error('operational_system')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
