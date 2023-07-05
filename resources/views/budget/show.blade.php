@@ -87,7 +87,7 @@
         </div>
         <div class="row">
             <p class="h2">Dados Orçamentos</p>
-          
+
             @foreach ($data_user as $budget)
 
             <div class="col-3">
@@ -136,16 +136,21 @@
                 {{ $budget['final_budget_value'] }}
             </div>
         </div>
-        <div class="d-flex align-items-end flex-column bd-highlight mb-3" style="height: 200px;">
-            <div class="mt-auto p-2 bd-highlight">
+        <div class="d-flex justify-content-between" style="height: 200px;">
+
+            <form action="{{ route('cadastro-orcamento-tipo.edit', ['cadastro_orcamento_tipo' => $user['user_project_budget']['id']]) }}">
+                @csrf
+                @method('GET')
+                <button type="submit">Enviar Orçamento</button>
+            </form>
 
 
-                <form action="{{ route('enviar-orcamento', ['id' => $user['user_project_budget']['id']]) }}" method="POST">
-                    @csrf
-                    <button type="submit">Enviar Orçamento</button>
-                </form>
 
-            </div>
+            <form action="{{ route('enviar-orcamento', ['id' => $user['user_project_budget']['id']]) }}" method="POST">
+                @csrf
+                <button type="submit">Enviar Orçamento</button>
+            </form>
+
         </div>
         @endforeach
 

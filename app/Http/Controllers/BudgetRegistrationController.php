@@ -8,6 +8,7 @@ use App\Models\UserProjectBudget;
 use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Throwable;
 
@@ -32,23 +33,23 @@ class BudgetRegistrationController extends Controller
 
     public function indexDesktop(): View
     {
-    
+
         return view('budget.budget-desktop');
     }
 
-    
+
     public function indexMobile(): View
     {
         return view('budget.budget-mobile');
     }
-    
+
 
     public function indexWeb(): View
     {
 
         return view('budget.budget-web');
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -73,11 +74,12 @@ class BudgetRegistrationController extends Controller
             Session::put('budgetId', $budget->id);
 
             return redirect()->route('cadastro-orcamento.index')->with([
-                'success' => 'Dados criados com sucesso. Envie o orçamento para o e-mail: '.$request->email,
+                'success' => 'Dados criados com sucesso. Envie o orçamento para o e-mail: ' . $request->email,
                 'budgetId' => $budget->id,
             ]);
         } catch (Throwable $e) {
-            return redirect()->back()->with('error', 'Erro ao criar o budget: '.$e->getMessage());
+            Log::error('Erro ao criar o budget:', ['exception' => $e]);
+            return redirect()->back()->with('error', 'Erro ao criar o budget: ' . $e->getMessage());
         }
     }
 
@@ -88,7 +90,7 @@ class BudgetRegistrationController extends Controller
     {
         $data_user = $this->budgetService->getFilteredBudgetForUser($register);
 
-        if (! $data_user) {
+        if (!$data_user) {
             abort(404, 'Registro não encontrado.');
         }
 
@@ -114,7 +116,8 @@ class BudgetRegistrationController extends Controller
             Session::flash('success', 'Orçamento enviado com sucesso.');
         } catch (\Exception $e) {
             // Em caso de erro, defina a mensagem de erro na sessão
-            Session::flash('error', 'Ocorreu um erro ao enviar o orçamento: '.$e->getMessage());
+            Log::error('Ocorreu um erro ao enviar o orçamento:', ['exception' => $e]);
+            Session::flash('error', 'Ocorreu um erro ao enviar o orçamento: ' . $e->getMessage());
         }
 
         // Redirecione para a mesma tela

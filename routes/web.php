@@ -21,13 +21,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('cadastro-orcamento', BudgetRegistrationController::class);
 Route::resource('cadastro-orcamento-tipo', BudgetRegistrationTypeController::class);
-Route::get('cadastro-orcamento-result/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'show'])->name('budget.show');
-Route::post('cadastro-orcamento-send/{id}', [BudgetRegistrationController::class, 'sendBudget'])->name('enviar-orcamento');
-Route::get('cadastro-orcamento-desktop', [BudgetRegistrationController::class, 'indexDesktop'])->name('cadastro-orcamento-desktop');
-Route::get('cadastro-orcamento-mobile', [BudgetRegistrationController::class, 'indexMobile'])->name('cadastro-orcamento-mobile');
-Route::get('cadastro-orcamento-web', [BudgetRegistrationController::class, 'indexWeb'])->name('cadastro-orcamento-web');
+
+
+Route::get('cadastro-orcamento-result/{cadastro_orcamento}/{register}', [BudgetRegistrationController::class, 'show'])
+    ->name('budget.show');
+
+Route::resource('cadastro-orcamento', BudgetRegistrationController::class)
+    ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
+
+Route::get('cadastro-orcamento-desktop', [BudgetRegistrationController::class, 'indexDesktop'])
+    ->name('cadastro-orcamento-desktop');
+
+Route::get('cadastro-orcamento-mobile', [BudgetRegistrationController::class, 'indexMobile'])
+    ->name('cadastro-orcamento-mobile');
+
+Route::get('cadastro-orcamento-web', [BudgetRegistrationController::class, 'indexWeb'])
+    ->name('cadastro-orcamento-web');
+
+Route::post('cadastro-orcamento-send/{id}', [BudgetRegistrationController::class, 'sendBudget'])
+    ->name('enviar-orcamento');
+
 
 
 
@@ -43,4 +57,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

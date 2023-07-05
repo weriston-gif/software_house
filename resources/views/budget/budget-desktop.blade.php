@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <label for="operational_system" class="block">Qual sistema operacional:</label>
-                    <input type="operational_system" name="operational_system" id="operational_system" placeholder="Quais sistema operacionais...">
+                    <input type="operational_system" name="operational_system" id="operational_system" placeholder="Quais sistema operacionais..." class="w-full rounded-md p-2 border border-gray-300">
                     @error('operational_system')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror

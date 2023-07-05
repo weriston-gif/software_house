@@ -7,6 +7,7 @@ use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
 use App\Notifications\NewBudget;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
@@ -19,11 +20,12 @@ class BudgetService
         } catch (ModelNotFoundException $exception) {
             throw new \Exception('Tipo de valor da página de login não encontrado.', 404, $exception);
         }
+        $valuePerPage_in_bd = $typeModel->value_per_page;
+        $valuePerPage_login_in_bd = $typeModel->value_page_login;
 
-        $valuePerPage = $typeModel->value_per_page;
-        $valuePageLogin = ! empty($valuePageLogin) ? $valuePerPage : 0;
+        $valuePageLogin = !empty($valuePageLogin) ? $valuePerPage_login_in_bd : 0;
 
-        $totalValue = ($valuePerPage * $valuePerPage) + $valuePageLogin;
+        $totalValue = ($valuePerPage_in_bd * $valuePerPage) + $valuePageLogin;
 
         // Retorne a mensagem de sucesso
         return $totalValue;
@@ -46,9 +48,36 @@ class BudgetService
 
             return $filteredBudget->toArray();
         } catch (\Exception $e) {
-            throw new \Exception('Erro ao obter os orçamentos com ID '.$id.': '.$e->getMessage());
+            throw new \Exception('Erro ao obter os orçamentos com ID ' . $id . ': ' . $e->getMessage());
         }
     }
+
+    public function updateBudgetForUser($idUserProject, $IdUserProjectType, array $data_user_persona, array $data_user_types)
+    {
+
+
+
+        try {
+            
+            $budgetUser = UserProjectBudget::find($idUserProject);
+            $budgetUserType = UserProjectBudgetType::find($IdUserProjectType);
+            
+            if ($budgetUser) {
+                $budgetUser->fill($data_user_persona);
+                $budgetUser->save();
+            }
+            
+            if ($budgetUserType) {
+                $budgetUserType->fill($data_user_types);
+                $budgetUserType->save();
+            }
+            
+            return true;
+        } catch (\Exception $e) {
+            throw new \Exception('Erro ao atualizar o orçamento com ID '  . ': ' . $e->getMessage());
+        }
+    }
+
 
     public function registerBudget(array $data)
     {
