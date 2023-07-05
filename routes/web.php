@@ -4,9 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BudgetRegistrationController;
 use App\Http\Controllers\BudgetRegistrationTypeController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
-
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +37,8 @@ Route::get('cadastro-orcamento-web', [BudgetRegistrationController::class, 'inde
 Route::post('cadastro-orcamento-send/{id}', [BudgetRegistrationController::class, 'sendBudget'])
     ->name('enviar-orcamento');
 
-
 Route::resource('admin', AdminController::class)
-->middleware(AdminMiddleware::class);
-
+    ->middleware(AdminMiddleware::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -54,4 +51,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

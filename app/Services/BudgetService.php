@@ -24,7 +24,7 @@ class BudgetService
         $valuePerPage_in_bd = $typeModel->value_per_page;
         $valuePerPage_login_in_bd = $typeModel->value_page_login;
 
-        $valuePageLogin = !empty($valuePageLogin) ? $valuePerPage_login_in_bd : 0;
+        $valuePageLogin = ! empty($valuePageLogin) ? $valuePerPage_login_in_bd : 0;
 
         $totalValue = ($valuePerPage_in_bd * $valuePerPage) + $valuePageLogin;
 
@@ -49,7 +49,7 @@ class BudgetService
 
             return $filteredBudget->toArray();
         } catch (\Exception $e) {
-            throw new \Exception('Erro ao obter os orçamentos com ID ' . $id . ': ' . $e->getMessage());
+            throw new \Exception('Erro ao obter os orçamentos com ID '.$id.': '.$e->getMessage());
         }
     }
 
@@ -67,20 +67,17 @@ class BudgetService
             $budgetUserType->fill($dataUserTypes);
             $budgetUserType->save();
 
-
-            Notification::route('mail',  $budgetUser->emai)
+            Notification::route('mail', $budgetUser->emai)
                 ->notify(new NewBudget());
-
 
             DB::commit();
 
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
-            throw new \Exception('Erro ao atualizar o orçamento com ID ' . $idUserProject . ': ' . $e->getMessage());
+            throw new \Exception('Erro ao atualizar o orçamento com ID '.$idUserProject.': '.$e->getMessage());
         }
     }
-
 
     public function registerBudget(array $data)
     {

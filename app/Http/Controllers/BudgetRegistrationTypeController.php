@@ -7,10 +7,8 @@ use App\Http\Requests\CreateBudgetTypeRequest;
 use App\Models\Type;
 use App\Services\BudgetService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
 
 class BudgetRegistrationTypeController extends Controller
 {
@@ -56,8 +54,6 @@ class BudgetRegistrationTypeController extends Controller
             'type' => $type,
         ];
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -113,17 +109,15 @@ class BudgetRegistrationTypeController extends Controller
             // Retorne para a mesma tela com uma mensagem de erro
             Log::error('Erro no registro do orçamento:', ['exception' => $exception]);
 
-            return redirect()->back()->with('error', 'Erro no envio: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'Erro no envio: '.$exception->getMessage());
         }
     }
-
-
 
     public function edit(string $cadastro_orcamento_tipo): View
     {
         $data_user = $this->budgetService->getFilteredBudgetForUser($cadastro_orcamento_tipo);
 
-        if (!$data_user) {
+        if (! $data_user) {
             abort(404, 'Registro não encontrado.');
         }
         $types = Type::arrayTypes();
@@ -180,7 +174,6 @@ class BudgetRegistrationTypeController extends Controller
 
             $this->budgetService->updateBudgetForUserType($data_user['id'], $data_user['idBudget'], $data_user_persona, $data_user_types);
 
-
             // Retornar uma resposta de sucesso, redirecionar ou fazer qualquer outra coisa necessária
             return redirect()->back()->with('success', 'Orçamento atualizado com sucesso! Enviamos para seu e-mail os dados');
         } catch (\Exception $e) {
@@ -191,7 +184,7 @@ class BudgetRegistrationTypeController extends Controller
             Log::error('Erro durante a atualização do orçamento:', ['exception' => $e]);
 
             // Exemplo de redirecionamento para uma página de erro com mensagem de erro
-            return redirect()->back()->with('error', 'Erro no envio: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro no envio: '.$e->getMessage());
         }
     }
 }

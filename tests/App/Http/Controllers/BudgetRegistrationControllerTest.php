@@ -2,14 +2,12 @@
 
 namespace Tests\App\Http\Controllers;
 
-use App\Models\Type;
-use App\Models\UserProjectBudgetType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
-# php artisan test --filter=BudgetRegistrationControllerTest
+// php artisan test --filter=BudgetRegistrationControllerTest
 
 class BudgetRegistrationControllerTest extends TestCase
 {
@@ -20,10 +18,9 @@ class BudgetRegistrationControllerTest extends TestCase
     /**
      * A basic feature test example.
      */
-  
     public function test_store_method_creates_budget_and_redirects()
     {
-        
+
         $data = [
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -43,5 +40,4 @@ class BudgetRegistrationControllerTest extends TestCase
             ->assertSessionHas('success');
 
     }
-
 }

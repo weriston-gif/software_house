@@ -27,7 +27,7 @@ class BudgetUpdateRequest extends FormRequest
                 'required', 'integer', Rule::exists('user_project_budgets', 'id'),
             ],
             'idBudget' => [
-                'required', 'integer', 
+                'required', 'integer',
             ],
             'name' => 'required|string',
             'email' => 'required|email',
@@ -40,7 +40,7 @@ class BudgetUpdateRequest extends FormRequest
             'municipio' => 'required',
             'uf' => 'required',
             'pais' => 'required',
-            
+
         ];
     }
 }

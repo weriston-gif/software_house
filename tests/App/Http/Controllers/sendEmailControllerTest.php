@@ -5,16 +5,13 @@ namespace Tests\App\Http\Controllers;
 use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
-use App\Notifications\NewBudget;
 use App\Observers\TypeObserver;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-
-# php artisan test --filter=sendEmailControllerTest
+// php artisan test --filter=sendEmailControllerTest
 
 class sendEmailControllerTest extends TestCase
 {

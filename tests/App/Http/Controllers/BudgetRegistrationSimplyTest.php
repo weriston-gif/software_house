@@ -2,12 +2,9 @@
 
 namespace Tests\App\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-
-# php artisan test --filter=BudgetRegistrationSimplyTest
+// php artisan test --filter=BudgetRegistrationSimplyTest
 
 class BudgetRegistrationSimplyTest extends TestCase
 {
@@ -27,11 +24,11 @@ class BudgetRegistrationSimplyTest extends TestCase
 
         $response->assertStatus(200);
     }
+
     public function teste_index_desktop(): void
     {
         $response = $this->get('/cadastro-orcamento-desktop');
 
         $response->assertStatus(200);
     }
-
 }

@@ -2,14 +2,10 @@
 
 namespace Tests\App\Http\Controllers;
 
-use App\Models\Type;
 use App\Models\UserProjectBudgetType;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-
-# php artisan test --filter=BudgetRegistrationEditionTest
+// php artisan test --filter=BudgetRegistrationEditionTest
 
 class BudgetRegistrationEditionTest extends TestCase
 {
@@ -28,8 +24,6 @@ class BudgetRegistrationEditionTest extends TestCase
             ->assertViewIs('budget.edit')
             ->assertViewHas(['data_user', 'types']);
 
-
-  
     }
 
     public function test_edit_method_returns_404_for_nonexistent_record()

@@ -15,13 +15,11 @@ class Type extends Model
 
     const TYPE_EXISTES_DESKTOP = 3;
 
-
     protected $fillable = [
         'description',
         'value_page_login',
         'value_per_page',
     ];
-
 
     public static function arrayTypes()
     {
@@ -38,6 +36,7 @@ class Type extends Model
     {
         return self::all();
     }
+
     public function userProjectBudgetType()
     {
         return $this->hasMany(UserProjectBudgetType::class);

@@ -17,10 +17,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->role_admin) {
+        if (! Auth::user()->role_admin) {
             return redirect(RouteServiceProvider::HOME);
         }
+
         return $next($request);
     }
-    
 }
