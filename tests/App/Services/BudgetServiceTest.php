@@ -66,7 +66,7 @@ class BudgetServiceTest extends TestCase
         $this->assertEquals($expectedTotalValue, $totalValue);
     }
 
-    public function testUpdateBudgetForUserType()
+    public function testCreateBudgetForUserType()
     {
         // Cria um registro fictício de UserProjectBudget para usar no teste
         $budgetUser = UserProjectBudget::factory()->create();

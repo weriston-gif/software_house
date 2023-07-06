@@ -31,8 +31,7 @@ class sendEmailControllerTest extends TestCase
         $response = $this->post("cadastro-orcamento-send/{$user->id}");
 
         // Verifique se a resposta tem status 302 (redirecionamento)
-        $response->assertStatus(302); // Ele se dá esse status pois ele volta para tela de orçamentos
-
+        $response->assertStatus(302); 
         // Verifique se a mensagem de sucesso está presente na sessão
         $this->assertEquals('Orçamento enviado com sucesso.', session('success'));
     }

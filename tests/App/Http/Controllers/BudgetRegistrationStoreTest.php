@@ -63,7 +63,7 @@ class BudgetRegistrationStoreTest extends TestCase
         // Simule a solicitação HTTP PATCH para a rota de atualização
         $response = $this->patch(route('cadastro-orcamento-tipo.update', ['cadastro_orcamento_tipo' => $budgetType->id]));
         // Verifique se a resposta tem o status esperado
-        $response->assertStatus(302); // Ou outro status esperado, dependendo da lógica do seu controlador
+        $response->assertStatus(302); 
 
         // Verifique se o registro foi atualizado no banco de dados
         $this->assertDatabaseHas('user_project_budget_types', array_merge(['id' => $budgetType->id]));
@@ -156,10 +156,10 @@ class BudgetRegistrationStoreTest extends TestCase
         ];
 
         $response = $this->patch(route('cadastro-orcamento-tipo.update', ['cadastro_orcamento_tipo' => $userProjectBudgetType->id]), $data_user_all);
-        $response->assertStatus(302); // Ou outro status esperado, dependendo da lógica do seu controlador
+        $response->assertStatus(302); 
 
         // Chame a função de atualização e verifique se retorna true
-        $budgetService = new BudgetService(); // Substitua pela instância real do seu serviço
+        $budgetService = new BudgetService(); 
         $updated = $budgetService->updateBudgetForUserType($userProjectBudget->id, $userProjectBudgetType->id, $data_user, $data_user_types);
         $this->assertTrue($updated);
 
