@@ -5,10 +5,7 @@ namespace Tests\App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserProjectBudgetType;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-
 
 // php artisan test --filter=BudgetAdminControllerTest
 
@@ -49,17 +46,16 @@ class BudgetAdminControllerTest extends TestCase
     public function testAdminShow()
     {
         $adminUser = User::factory()->create(['role_admin' => true]);
-    
+
         $budgetType = UserProjectBudgetType::factory()->create();
-    
-        $response = $this->actingAs($adminUser)->get('/admin/' . $budgetType->id);
-    
+
+        $response = $this->actingAs($adminUser)->get('/admin/'.$budgetType->id);
+
         $response->assertStatus(200);
-    
+
         $response->assertViewIs('admin.show');
-    
+
         $response->assertViewHas('data_user');
-    
+
     }
-    
 }

@@ -8,7 +8,6 @@ use App\Services\BudgetService;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
-
 // php artisan test --filter=BudgetRegistrationStoreTest
 
 class BudgetRegistrationStoreTest extends TestCase
@@ -61,7 +60,6 @@ class BudgetRegistrationStoreTest extends TestCase
         // Crie um registro inicial na tabela user_project_budget_types
         $budgetType = UserProjectBudgetType::factory()->create();
 
-
         // Simule a solicitação HTTP PATCH para a rota de atualização
         $response = $this->patch(route('cadastro-orcamento-tipo.update', ['cadastro_orcamento_tipo' => $budgetType->id]));
         // Verifique se a resposta tem o status esperado
@@ -70,6 +68,7 @@ class BudgetRegistrationStoreTest extends TestCase
         // Verifique se o registro foi atualizado no banco de dados
         $this->assertDatabaseHas('user_project_budget_types', array_merge(['id' => $budgetType->id]));
     }
+
     public function testUpdate()
     {
         // Crie um registro inicial na tabela user_project_budgets
@@ -158,7 +157,7 @@ class BudgetRegistrationStoreTest extends TestCase
 
         $response = $this->patch(route('cadastro-orcamento-tipo.update', ['cadastro_orcamento_tipo' => $userProjectBudgetType->id]), $data_user_all);
         $response->assertStatus(302); // Ou outro status esperado, dependendo da lógica do seu controlador
-        
+
         // Chame a função de atualização e verifique se retorna true
         $budgetService = new BudgetService(); // Substitua pela instância real do seu serviço
         $updated = $budgetService->updateBudgetForUserType($userProjectBudget->id, $userProjectBudgetType->id, $data_user, $data_user_types);

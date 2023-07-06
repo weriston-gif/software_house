@@ -95,7 +95,7 @@ class BudgetService
             'system_pay' => 'boolean',
             'printer' => 'boolean',
             'license_access' => 'boolean',
-            
+
             'final_budget_value' => 'required|numeric',
         ];
 

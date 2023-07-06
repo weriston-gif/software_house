@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         $name = $faker->name;
         $email = $faker->unique()->safeEmail;
-        $password = 'password'; // Substitua 'password' pela senha desejada
+        $password = 'password';
 
         DB::table('users')->insert([
             'name' => $name,

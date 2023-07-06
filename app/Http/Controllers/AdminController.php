@@ -47,7 +47,7 @@ class AdminController extends Controller
     public function show(string $id)
     {
         $data_user = $this->adminservice->getFilteredBudgetForAdminParams($id);
-    
+
         return view('admin.show')
             ->with('data_user', $data_user);
     }
