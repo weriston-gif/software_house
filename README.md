@@ -1,66 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Guia de Uso do Software
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um guia para ajudar você a utilizar o software corretamente. Siga as etapas abaixo:
 
-## About Laravel
+### 1. Iniciando o servidor local
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Execute o seguinte comando para iniciar o servidor local:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```
+php artisan serve
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Isso iniciará o servidor local e você poderá acessar o aplicativo em seu navegador usando o URL fornecido.
 
-## Learning Laravel
+### 2. Migração do Banco de Dados
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Execute o seguinte comando para migrar as tabelas do banco de dados:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```
+php artisan migrate
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Isso criará as tabelas necessárias no banco de dados de acordo com as definições dos modelos.
 
-## Laravel Sponsors
+### 3. Povoando o Banco de Dados
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Execute o seguinte comando para popular o banco de dados com dados de exemplo:
 
-### Premium Partners
+```
+php artisan db:seed
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Isso criará registros de exemplo nas tabelas do banco de dados para uso durante o desenvolvimento e teste.
 
-## Contributing
+> **Observação**: Após a execução deste comando, será gerado um usuário administrador. Verifique os logs para obter as informações de login desse usuário.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Validação da Conexão com o Banco de Dados
 
-## Code of Conduct
+Certifique-se de que sua configuração de conexão com o banco de dados esteja correta no arquivo `.env`. Verifique se as informações do host, nome do banco de dados, usuário e senha estão corretamente configuradas.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Execução da Fila de E-mails
 
-## Security Vulnerabilities
+Para que os e-mails sejam enviados corretamente, você precisa executar a fila de trabalhos (jobs) relacionada aos e-mails. Execute o seguinte comando:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+php artisan queue:work --tries=3
+```
 
-## License
+Isso iniciará o processo de execução da fila de trabalhos, permitindo que os e-mails sejam processados e enviados.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Estrutura dos Testes
+
+Os testes foram organizados seguindo a estrutura de diretórios do aplicativo. Certifique-se de que os testes estejam localizados no diretório `tests/App`.
+
+### Armazenamento de Dados
+
+Os dados de registro estão sendo armazenados em um banco de dados chamado `user_project_budget_types`, que possui relacionamentos com as tabelas `types` e `user_project_budgets`. Verifique a estrutura dessas tabelas no banco de dados para entender como os dados estão sendo armazenados e relacionados.
+
+Com essas etapas concluídas, você estará pronto para utilizar o software corretamente. Certifique-se de seguir todas as instruções e verificar se não há erros ou exceções durante a execução do aplicativo.
+
+#### Teste
+
+
+para melhor confiabilidade limpe o banco de dados para fazer os teste
+command php artisan migrate:refresh
+Não rode php artisan db:seed
+Pode duplicar informações na base de dados
+
+# php artisan test --filter=sendEmailControllerTest
+# php artisan test --filter=BudgetServiceTest 
+# php artisan test --filter=BudgetAdminControllerTest
+# php artisan test --filter=BudgetRegistrationControllerTest
+# php artisan test --filter=BudgetRegistrationEditionTest
+# php artisan test --filter=BudgetRegistrationSimplyTest
+# php artisan test --filter=BudgetRegistrationStoreTest
+# php artisan test --filter=BudgetAdminServiceTest
+
+
+
