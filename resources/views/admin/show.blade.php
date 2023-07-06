@@ -5,6 +5,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <a href="{{route('admin.index')}}" class="px-5 py-2.5 text-sm font-semibold leading-6 text-primary-900 shadow-sm hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Voltar</a>
+
                     <div class="container">
                         <div class="row">
                             <p class="h2">Dados pessoais</p>
@@ -90,10 +92,13 @@
                             <p class="h2">Dados Orçamentos</p>
 
                             @foreach ($data_user as $budget)
+
                             <div class="col-3">
                                 <p style="color: #0d6efd;">Sistema Operacional:</p>
+                                <p>
+                                    {{ $budget['operational_system'] == 0 ? 'Não' :  $budget['operational_system']  }}
+                                </p>
 
-                                {{ $budget['operational_system'] == 0 ? 'Não' : budget['operational_system'] }}
                             </div>
                             <div class="col-3">
                                 <p style="color: #0d6efd;">Valor total de página:</p>
@@ -114,11 +119,6 @@
                                 <p style="color: #0d6efd;">Impressora:</p>
 
                                 {{ empty($budget['printer'])  ? 'Não' : 'Sim'  }}
-                            </div>
-                            <div class="col-3">
-                                <p style="color: #0d6efd;">Licença de acesso:</p>
-
-                                {{ empty($budget['license_access']) ? 'Não' : 'Sim'  }}
                             </div>
                             <div class="col-3">
                                 <p style="color: #0d6efd;">Licença de acesso:</p>

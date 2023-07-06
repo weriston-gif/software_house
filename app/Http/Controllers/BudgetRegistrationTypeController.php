@@ -81,10 +81,10 @@ class BudgetRegistrationTypeController extends Controller
             // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'
             $data_register = [
                 'user_project_budget_id' => $idValidate,
-                'valuePerPage' => $valuePerPage,
+                'value_total_page' => $valuePerPage,
                 'type_id' => $type,
                 'platform' => $platform,
-                'value_page_login' => $valuePageLogin,
+                'page_login' => $valuePageLogin,
                 'system_pay' => $systemPay,
                 'final_budget_value' => $totalValue,
                 'license_access' => $licenseAccess,

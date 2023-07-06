@@ -85,14 +85,17 @@ class BudgetService
         $rules = [
             'user_project_budget_id' => 'required',
             'type_id' => 'required|exists:types,id',
-            'valuePerPage' => 'integer|required',
+            'value_total_page' => 'integer|required',
+
             'platform' => 'string',
             'browser_support' => 'string',
             'operational_system' => 'string',
-            'value_page_login' => 'string',
-            'system_pay' => 'integer',
+
+            'page_login' => 'boolean',
+            'system_pay' => 'boolean',
             'printer' => 'boolean',
             'license_access' => 'boolean',
+            
             'final_budget_value' => 'required|numeric',
         ];
 
@@ -102,7 +105,6 @@ class BudgetService
             'user_project_budget_id.exists' => 'O ID do usuário não foi encontrado.',
             'type_id.required' => 'O campo "ID do tipo" é obrigatório.',
             'type_id.exists' => 'O ID do tipo não foi encontrado.',
-            'platform.required' => 'O campo "Plataforma" é obrigatório.',
             'final_budget_value.required' => 'O campo "Valor final do orçamento" é obrigatório.',
             'final_budget_value.numeric' => 'O campo "Valor final do orçamento" deve ser um número.',
         ];
@@ -118,12 +120,12 @@ class BudgetService
         $budgetType = UserProjectBudgetType::create([
             'user_project_budget_id' => $data['user_project_budget_id'],
             'type_id' => $data['type_id'],
-            'value_total_page' => $data['valuePerPage'],
+            'value_total_page' => $data['value_total_page'],
             'platform' => $data['platform'] ?? 0,
             'browser_support' => $data['browser_support'] ?? 0,
             'operational_system' => $data['operational_system'] ?? 0,
             'system_pay' => isset($data['system_pay']) && $data['system_pay'] === '1',
-            'page_login' => isset($data['value_page_login']) && $data['value_page_login'] === '1',
+            'page_login' => isset($data['page_login']) && $data['page_login'] === '1',
             'printer' => isset($data['printer']) && $data['printer'] === '1',
             'license_access' => isset($data['license_access']) && $data['license_access'] === '1',
             'final_budget_value' => $data['final_budget_value'],

@@ -80,20 +80,6 @@ class BudgetRegistrationController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id, $register): view
-    {
-        $data_user = $this->budgetService->getFilteredBudgetForUser($register);
-
-        if (! $data_user) {
-            abort(404, 'Registro não encontrado.');
-        }
-
-        // Retorna a visualização 'budget.show' passando as variáveis $data_users
-        return view('budget.show', compact('data_user'));
-    }
 
     /**
      * Show the form for editing the specified resource.

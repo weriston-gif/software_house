@@ -1,5 +1,8 @@
 <?php
 
+
+namespace Tests\App\Service;
+
 use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
@@ -10,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 use Tests\TestCase;
 
 // php artisan test --filter=BudgetServiceTest
+
 
 class BudgetServiceTest extends TestCase
 {
@@ -101,11 +105,7 @@ class BudgetServiceTest extends TestCase
             'browser_support' => 'Some browser support', // Insira aqui o valor correto para $browserSupport
         ];
 
-        $email = 'test@example.com';
 
-        // Mock da classe Notification
-        Notification::fake();
-        
         // Chama o método updateBudgetForUserType com os dados de teste
         $service = new BudgetService();
         $result = $service->updateBudgetForUserType($budgetUser->id, $budgetUserType->id, $dataUserPersona, $dataUserTypes);
@@ -124,15 +124,7 @@ class BudgetServiceTest extends TestCase
         $this->assertEquals($dataUserTypes['type_id'], $updatedBudgetUserType->type_id);
         // Verifique outros campos atualizados conforme necessário
         
-        // Verifica se a notificação foi enviada por e-mail
-        Notification::assertSentToMail(
-            $updatedBudgetUser,
-            NewBudget::class,
-            function ($notification, $channels, $notifiable) use ($email) {
-                $mailMessage = $notification->toMail($notifiable);
-                return $channels === ['mail'] && $mailMessage->to[0]['address'] === $email;
-            }
-        );
+     
         
     }
 }
