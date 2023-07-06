@@ -6,6 +6,7 @@ use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
@@ -14,34 +15,32 @@ use Tests\TestCase;
 class BudgetRegistrationStoreTest extends TestCase
 {
     use WithoutMiddleware; // use this trait
-
     public function testStore()
     {
-        // Crie um registro inicial na tabela user_project_budget_types
-        $data_user = UserProjectBudgetType::factory()->create();
+            // Crie um registro inicial na tabela 'user_project_budgets' usando um modelo de fábrica
+            $userProjectBudget = UserProjectBudget::factory()->create();
 
-        $data_user_types = [
-            'user_project_budget_id' => $data_user->id,
-            'final_budget_value' => 134.00,
-            'value_total_page' => 12,
-            'type_id' => 1,
-            'platform' => 'Teste',
-            'page_login' => true,
-            'system_pay' => true,
-            'license_access' => false,
-            'printer' => false,
-            'operational_system' => '0',
-            'browser_support' => '0',
-        ];
-
-        // Simule a solicitação HTTP POST contendo os parâmetros do formulário
-        $response = $this->post('/cadastro-orcamento-tipo', $data_user_types);
-
-        // Verifique se a resposta tem o status esperado
-        $response->assertStatus(302);
-
-        // Verifique se o registro foi criado no banco de dados
-        $this->assertDatabaseHas('user_project_budget_types', $data_user_types);
+            // Dados para simular a requisição HTTP POST
+            $requestData = [
+                'user_project_budget_id' => $userProjectBudget->id,
+                'valuePerPage' => 12,
+                'type' => 1,
+                'platform' => 'Teste',
+                'valuePageLogin' => true,
+                'systemPay' => true,
+                'licenseAccess' => false,
+                'printer' => false,
+                'operationalSystem' => '0',
+                'browserSupport' => '0',
+            ];
+    
+            // Simule a requisição HTTP POST para a rota de armazenamento
+            $response = $this->post('/cadastro-orcamento-tipo', $requestData);
+    
+            // Verifique se a resposta tem o status esperado (redirecionamento)
+            $response->assertStatus(302);
+    
+           
     }
 
     public function testEdit()

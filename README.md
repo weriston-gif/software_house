@@ -63,6 +63,8 @@ Com essas etapas concluídas, você estará pronto para utilizar o software corr
 
 para melhor confiabilidade limpe o banco de dados para fazer os teste
 command php artisan migrate:refresh
+Não rode php artisan db:seed
+Pode duplicar informações na base de dados
 
 # php artisan test --filter=sendEmailControllerTest
 # php artisan test --filter=BudgetServiceTest 
