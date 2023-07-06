@@ -60,7 +60,18 @@ Com essas etapas concluídas, você estará pronto para utilizar o software corr
 
 #### Teste
 
-Teste do disparo de email pela rota
+
+para melhor confiabilidade limpe o banco de dados para fazer os teste
+command php artisan migrate:refresh
 
 # php artisan test --filter=sendEmailControllerTest
 # php artisan test --filter=BudgetServiceTest 
+# php artisan test --filter=BudgetAdminControllerTest
+# php artisan test --filter=BudgetRegistrationControllerTest
+# php artisan test --filter=BudgetRegistrationEditionTest
+# php artisan test --filter=BudgetRegistrationSimplyTest
+# php artisan test --filter=BudgetRegistrationStoreTest
+# php artisan test --filter=BudgetAdminServiceTest
+
+
+

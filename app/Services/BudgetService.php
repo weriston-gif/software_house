@@ -84,7 +84,7 @@ class BudgetService
         // Definir as regras de validação para cada campo
         $rules = [
             'user_project_budget_id' => 'required',
-            'type_id' => 'required|exists:types,id',
+            'type_id' => 'required',
             'value_total_page' => 'integer|required',
 
             'platform' => 'string',

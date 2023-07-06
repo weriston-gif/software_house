@@ -2,6 +2,7 @@
 
 namespace Tests\App\Http\Controllers;
 
+use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
@@ -17,42 +18,30 @@ class BudgetRegistrationStoreTest extends TestCase
     public function testStore()
     {
         // Crie um registro inicial na tabela user_project_budget_types
-        UserProjectBudgetType::factory()->create([
-            'user_project_budget_id' => 1,
-            'value_total_page' => 12,
-            'type_id' => 3,
-            'platform' => 'TESTE',
-            'page_login' => true,
-            'system_pay' => false,
-            'final_budget_value' => 123,
-            'license_access' => true,
-            'printer' => true,
-            'operational_system' => '0',
-            'browser_support' => '0',
-        ]);
+        $data_user = UserProjectBudgetType::factory()->create();
 
-        $budgetTypeData = [
-            'user_project_budget_id' => 1,
+        $data_user_types = [
+            'user_project_budget_id' => $data_user->id,
+            'final_budget_value' => 134.00,
             'value_total_page' => 12,
-            'type_id' => 3,
-            'platform' => 'TESTE',
+            'type_id' => 1,
+            'platform' => 'Teste',
             'page_login' => true,
-            'system_pay' => false,
-            'final_budget_value' => 123,
-            'license_access' => true,
-            'printer' => true,
+            'system_pay' => true,
+            'license_access' => false,
+            'printer' => false,
             'operational_system' => '0',
             'browser_support' => '0',
         ];
 
         // Simule a solicitação HTTP POST contendo os parâmetros do formulário
-        $response = $this->post('/cadastro-orcamento-tipo', $budgetTypeData);
+        $response = $this->post('/cadastro-orcamento-tipo', $data_user_types);
 
         // Verifique se a resposta tem o status esperado
         $response->assertStatus(302);
 
         // Verifique se o registro foi criado no banco de dados
-        $this->assertDatabaseHas('user_project_budget_types', $budgetTypeData);
+        $this->assertDatabaseHas('user_project_budget_types', $data_user_types);
     }
 
     public function testEdit()
@@ -63,7 +52,7 @@ class BudgetRegistrationStoreTest extends TestCase
         // Simule a solicitação HTTP PATCH para a rota de atualização
         $response = $this->patch(route('cadastro-orcamento-tipo.update', ['cadastro_orcamento_tipo' => $budgetType->id]));
         // Verifique se a resposta tem o status esperado
-        $response->assertStatus(302); 
+        $response->assertStatus(302);
 
         // Verifique se o registro foi atualizado no banco de dados
         $this->assertDatabaseHas('user_project_budget_types', array_merge(['id' => $budgetType->id]));
@@ -156,10 +145,10 @@ class BudgetRegistrationStoreTest extends TestCase
         ];
 
         $response = $this->patch(route('cadastro-orcamento-tipo.update', ['cadastro_orcamento_tipo' => $userProjectBudgetType->id]), $data_user_all);
-        $response->assertStatus(302); 
+        $response->assertStatus(302);
 
         // Chame a função de atualização e verifique se retorna true
-        $budgetService = new BudgetService(); 
+        $budgetService = new BudgetService();
         $updated = $budgetService->updateBudgetForUserType($userProjectBudget->id, $userProjectBudgetType->id, $data_user, $data_user_types);
         $this->assertTrue($updated);
 

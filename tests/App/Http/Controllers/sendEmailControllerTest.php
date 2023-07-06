@@ -24,8 +24,10 @@ class sendEmailControllerTest extends TestCase
     public function test_send_email_user()
     {
         $user = UserProjectBudget::factory()->create();
+        $type_id = Type::factory()->create();
+
         // Crie um registro fictício na tabela UserProjectBudgetType relacionado ao UserProjectBudget criado
-        $userProjectBudgetType = UserProjectBudgetType::factory()->create(['user_project_budget_id' => $user->id]);
+        $userProjectBudgetType = UserProjectBudgetType::factory()->create(['user_project_budget_id' => $user->id, 'type_id' => $type_id->id]);
 
         // Execute a notificação passando o ID do UserProjectBudget criado
         $response = $this->post("cadastro-orcamento-send/{$user->id}");

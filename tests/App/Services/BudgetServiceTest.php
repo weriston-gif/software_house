@@ -72,7 +72,9 @@ class BudgetServiceTest extends TestCase
         $budgetUser = UserProjectBudget::factory()->create();
 
         // Cria um registro fictício de UserProjectBudgetType para usar no teste
-        $budgetUserType = UserProjectBudgetType::factory()->create();
+        $type_id = Type::factory()->create();
+
+        $budgetUserType = UserProjectBudgetType::factory()->create(['type_id' => $type_id->id]);
 
         // Dados fictícios para atualizar o UserProjectBudget
         $dataUserPersona = [
@@ -91,7 +93,7 @@ class BudgetServiceTest extends TestCase
         $dataUserTypes = [
             'final_budget_value' => 100.0, // Insira aqui o valor correto para $totalValue
             'value_total_page' => 10, // Insira aqui o valor correto para $valuePerPage
-            'type_id' => 1, // Insira aqui o valor correto para $type
+            'type_id' => $type_id->id, // Insira aqui o valor correto para $type
             'platform' => 'Some platform', // Insira aqui o valor correto para $platform
             'page_login' => 1, // Insira aqui o valor correto para $valuePageLogin
             'system_pay' => true, // Insira aqui o valor correto para $systemPay
