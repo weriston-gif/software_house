@@ -9,6 +9,8 @@ class UserProjectBudget extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_project_budgets';
+
     protected $fillable = [
         'name',
         'email',

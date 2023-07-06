@@ -41,7 +41,7 @@
             Faça orçamentos dos seus sistemas, Mobile, Desktop ou Web.
         </h4>
         <div class="d-flex justify-content-center">
-            <a href="{{ route('budget.index') }}" class="btn btn-outline-primary">
+            <a href="{{ route('cadastro-orcamento.index') }}" class="btn btn-outline-primary">
                 Faça seu orçamento
             </a>
         </div>

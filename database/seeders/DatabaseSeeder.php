@@ -3,12 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Database\Seeders\TypeSeeder;
-use Illuminate\Support\Str;
 use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,14 +18,14 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            TypeSeeder::class
+            TypeSeeder::class,
         ]);
 
         $faker = Faker::create();
 
         $name = $faker->name;
         $email = $faker->unique()->safeEmail;
-        $password = 'password'; // Substitua 'password' pela senha desejada
+        $password = 'password';
 
         DB::table('users')->insert([
             'name' => $name,
@@ -39,7 +38,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        $this->command->info("Usuário criado:");
+        $this->command->info('Usuário criado:');
         $this->command->info("Nome: $name");
         $this->command->info("E-mail: $email");
         $this->command->info("Senha: $password");
