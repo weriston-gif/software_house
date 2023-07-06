@@ -154,22 +154,6 @@
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-3  desktopElement">
-                    <label for="license_access" class="block">Terá licença: </label>
-                    <input type="hidden" name="license_access" value="0">
-                    <input type="checkbox" name="license_access" value="1" id="license_access" {{ (!empty($user['license_access']) && $user['license_access']) ? 'checked' : '' }}>
-                    @error('license_access')
-                    <span style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="col-3 genericElement">
-                    <label for="system_pay" class="block">Terá tela de pagamento: </label>
-                    <input type="hidden" name="system_pay" value="0">
-                    <input type="checkbox" name="system_pay" value="1" id="system_pay" {{ (!empty($user['system_pay']) && $user['system_pay']) ? 'checked' : '' }}>
-                    @error('system_pay')
-                    <span style="color: red;">{{ $message }}</span>
-                    @enderror
-                </div>
                 <div class="col-3  genericElement">
                     <label for="value_page_login" class="block">Terá tela de login: </label>
                     <input type="hidden" name="value_page_login" value="0">
@@ -178,15 +162,32 @@
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="col-3  desktopElement">
+                    <label for="license_access" class="block">Terá licença: </label>
+                    <input type="hidden" name="license_access" value="0">
+                    <input type="checkbox" name="license_access" value="1" id="license_access" {{ (!empty($user['license_access']) && $user['license_access']) ? 'checked' : '' }}>
+                    @error('license_access')
+                    <span style="color: red;">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-3 genericElement2">
+                    <label for="system_pay" class="block">Terá tela de pagamento: </label>
+                    <input type="hidden" name="system_pay" value="0">
+                    <input type="checkbox" name="system_pay" value="1" id="system_pay" {{ (!empty($user['system_pay']) && $user['system_pay']) ? 'checked' : '' }}>
+                    @error('system_pay')
+                    <span style="color: red;">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <div class="col-3 ">
                     <p style="color: #0d6efd;" class="bg-success-subtle">Valor do ORÇAMENTO atual:</p>
 
                     R$ {{ $user['final_budget_value'] }}
                 </div>
             </div>
-            
-            <input type="hidden" id="idBudget"  name="idBudget" value="{{ $user['id'] }}">
-            <input type="hidden" id="id"  name="id" value="{{ $user['user_project_budget']['id']}}">
+
+            <input type="hidden" id="idBudget" name="idBudget" value="{{ $user['id'] }}">
+            <input type="hidden" id="id" name="id" value="{{ $user['user_project_budget']['id']}}">
             <input type="hidden" id="type" name="type" value="">
 
             <div class="d-flex align-items-end flex-column bd-highlight mb-3" style="height: 200px;">
@@ -216,6 +217,17 @@
             const mobileElements = document.querySelectorAll('.mobileElement');
             const desktopElements = document.querySelectorAll('.desktopElement');
             const genericElement = document.querySelector('.genericElement');
+            const genericElement2 = document.querySelector('.genericElement2');
+
+            const browser_support = document.getElementById('browser_support');
+            const operational_system = document.getElementById('operational_system');
+            const platform = document.getElementById('platform');
+            const printer = document.getElementById('printer');
+            const value_page_login = document.getElementById('value_page_login');
+            const license_access = document.getElementById('license_access');
+            const system_pay = document.getElementById('system_pay');
+
+
 
             // Defina uma função para manipular a mudança no select
             function handleTipoSelectChange() {
@@ -235,7 +247,14 @@
                     desktopElements.forEach(function(element) {
                         element.style.display = 'none';
                     });
+                    genericElement2.style.display = 'block';
+
                     genericElement.style.display = 'block';
+                    operational_system.value = '';
+                    platform.value = '';
+                    printer.checked = false;
+                    license_access.checked = false;
+
                 } else if (selectedValue === '2') {
                     // Exibir elementos móveis e ocultar elementos da Web, desktop e genérico
                     webElements.forEach(function(element) {
@@ -247,9 +266,20 @@
                     desktopElements.forEach(function(element) {
                         element.style.display = 'none';
                     });
+                    genericElement2.style.display = 'block';
+
+                    operational_system.value = '';
+                    browser_support.value = '';
+                    printer.checked = false;
+                    license_access.checked = false;
+
                     genericElement.style.display = 'block';
                 } else if (selectedValue === '3') {
                     // Ocultar elementos da Web, móveis e genérico, e exibir elementos desktop
+                    genericElement.style.display = 'none';
+                    genericElement2.style.display = 'none';
+
+
                     webElements.forEach(function(element) {
                         element.style.display = 'none';
                     });
@@ -259,7 +289,11 @@
                     desktopElements.forEach(function(element) {
                         element.style.display = 'block';
                     });
-                    genericElement.style.display = 'none';
+
+                    browser_support.value = '';
+                    platform.value = '';
+                    value_page_login.checked = false;
+                    system_pay.checked = false;
                 }
             }
 
