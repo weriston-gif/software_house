@@ -1,5 +1,9 @@
 Guia de Uso do Software
 
+
+As atualizações estão na MASTER.
+
+
 Este guia fornece instruções passo a passo para utilizar o software corretamente. Siga as etapas abaixo:
 1. Iniciando o Servidor Local
 
@@ -52,49 +56,49 @@ Execute os testes individuais conforme necessário, utilizando os comandos abaix
 
     bash
 
-php artisan test --filter=sendEmailControllerTest
+# php artisan test --filter=sendEmailControllerTest
 
 Testes do serviço de orçamento:
 
 bash
 
-php artisan test --filter=BudgetServiceTest
+# php artisan test --filter=BudgetServiceTest
 
 Testes do controlador de administração de orçamento:
 
 bash
 
-php artisan test --filter=BudgetAdminControllerTest
+# php artisan test --filter=BudgetAdminControllerTest
 
 Testes do controlador de registro de orçamento:
 
 bash
 
-php artisan test --filter=BudgetRegistrationControllerTest
+# php artisan test --filter=BudgetRegistrationControllerTest
 
 Testes de edição de orçamento:
 
 bash
 
-php artisan test --filter=BudgetRegistrationEditionTest
+# php artisan test --filter=BudgetRegistrationEditionTest
 
 Testes de registro simplificado de orçamento:
 
 bash
 
-php artisan test --filter=BudgetRegistrationSimplyTest
+# php artisan test --filter=BudgetRegistrationSimplyTest
 
 Testes de armazenamento de orçamento:
 
 bash
 
-php artisan test --filter=BudgetRegistrationStoreTest
+# php artisan test --filter=BudgetRegistrationStoreTest
 
 Testes do serviço deadministração de orçamento:
 
 bash
 
-    php artisan test --filter=BudgetAdminServiceTest
+ #   php artisan test --filter=BudgetAdminServiceTest
 
 Certifique-se de executar os testes individualmente conforme necessário e verificar se não há erros ou exceções durante a execução do aplicativo.
 

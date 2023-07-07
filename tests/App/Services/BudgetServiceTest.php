@@ -6,13 +6,23 @@ use App\Models\Type;
 use App\Models\UserProjectBudget;
 use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Validation\ValidationException;
+use Tests\CreatesApplication;
 use Tests\TestCase;
 
 // php artisan test --filter=BudgetServiceTest
 
 class BudgetServiceTest extends TestCase
 {
+    use CreatesApplication;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Artisan::call('migrate:fresh');
+    }
     public function testRegisterBudgetValidationFailure()
     {
         // Dados fictícios inválidos para forçar a falha na validação
@@ -72,8 +82,9 @@ class BudgetServiceTest extends TestCase
         $budgetUser = UserProjectBudget::factory()->create();
 
         // Cria um registro fictício de UserProjectBudgetType para usar no teste
-        $type_id = Type::factory()->create();
-
+        Type::factory()->create();
+        $type_id = Type::first();
+        
         $budgetUserType = UserProjectBudgetType::factory()->create(['type_id' => $type_id->id]);
 
         // Dados fictícios para atualizar o UserProjectBudget
