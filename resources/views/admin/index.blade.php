@@ -2,16 +2,16 @@
     @section('title', 'Tabela de Orçamento')
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class=" mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <p class="h2">Dados pessoais</p>
 
-                    <div class="container">
-                        <table class="table table-success">
+                    <div class="container-fluid">
+                        <table class="table table-success overflow-auto">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+
                                     <th>Nome</th>
                                     <th>Email</th>
                                     <th>Telefone</th>
@@ -30,7 +30,6 @@
                             <tbody>
                                 @foreach ($data_users as $user)
                                 <tr>
-                                    <td>{{ $user['id'] }}</td>
                                     <td>{{ $user['user_project_budget']['name'] }}</td>
                                     <td>{{ $user['user_project_budget']['email'] }}</td>
                                     <td>{{ $user['user_project_budget']['telefone'] }}</td>

@@ -15,7 +15,7 @@
         <form class="w-full" action="{{ route('cadastro-orcamento-tipo.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <label for="platform" class="block">Qual plataforma:</label>
                     <input type="platform" name="platform" id="platform" placeholder="Quais plataformas..." class="w-full rounded-md p-2 border border-gray-300">
 

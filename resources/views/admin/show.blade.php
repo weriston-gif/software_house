@@ -1,6 +1,16 @@
 <x-app-layout>
     @section('title', 'Dados do usuário')
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
 
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -140,13 +150,25 @@
 
                                 {{ $budget['final_budget_value'] }}
                             </div>
-                            @endforeach
-                        </div>
 
+                            <div style="background-color: ghostwhite;" class="my-3">
+                                <form action="{{ route('enviar-orcamento', ['id' => $budget['user_project_budget_id']]) }}" method="POST">
+                                    @csrf
+                                    <button class="btn " type="submit">
+                                        <p style="color: #0d6efd;">
+                                            Confirmar o envio do Orçamento
+                                        </p>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </x-app-layout>

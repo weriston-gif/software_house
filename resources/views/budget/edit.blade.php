@@ -190,13 +190,13 @@
             <input type="hidden" id="id" name="id" value="{{ $user['user_project_budget']['id']}}">
             <input type="hidden" id="type" name="type" value="">
 
-            <div class="d-flex align-items-end flex-column bd-highlight mb-3" style="height: 200px;">
+            <div class="d-flex align-items-end flex-column bd-highlight mb-3" style="height: 50px;">
                 <div class="mt-auto p-2 bd-highlight">
 
 
                     <form action="{{ route('cadastro-orcamento-tipo.update', ['cadastro_orcamento_tipo' => $user['user_project_budget']['id']]) }}" method="POST">
                         @csrf
-                        <button type="submit">Confirmar o envio do Orçamento </button>
+                        <button class="btn btn-primary" type="submit">Confirmar o envio do Orçamento </button>
                     </form>
 
                 </div>

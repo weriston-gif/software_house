@@ -1,5 +1,5 @@
 <x-guest-layout>
-@section('title', 'Dados de contato')
+    @section('title', 'Dados de contato')
 
     <div id="toggleMyModal" class="modal" tabindex="-1">
         <div class="modal-dialog">
@@ -34,9 +34,20 @@
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
 
+        @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
 
     <div class="container d-flex justify-content-center mt-5">
+     
         <form class="w-full" action="{{ route('cadastro-orcamento.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
