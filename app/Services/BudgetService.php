@@ -9,6 +9,7 @@ use App\Notifications\NewBudget;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class BudgetService
@@ -83,8 +84,8 @@ class BudgetService
     {
         // Definir as regras de validação para cada campo
         $rules = [
-            'user_project_budget_id' => 'required',
-            'type_id' => 'required',
+            'user_project_budget_id' =>  'required', 'string', Rule::exists('user_project_budgets', 'id'),
+            'type_id' => 'required', Rule::exists('type', 'id'),
             'value_total_page' => 'integer|required',
 
             'platform' => 'string',

@@ -13,7 +13,7 @@ return new class extends Migration
     {
 
         Schema::create('user_project_budgets', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name', 255);
             $table->string('email', 100);
             $table->string('telefone', 50)->nullable();

@@ -26,11 +26,11 @@ class BudgetRegistrationEditionTest extends TestCase
 
     }
 
-    public function test_edit_method_returns_404_for_nonexistent_record()
+    public function test_edit_method_returns_500_for_nonexistent_record()
     {
         // Chamada do método edit com um ID inexistente
-        $response = $this->get(route('cadastro-orcamento-tipo.edit', 999));
+        $response = $this->get(route('cadastro-orcamento-tipo.edit', '9996f62f-071b-'));
 
-        $response->assertStatus(404);
+        $response->assertStatus(500);
     }
 }

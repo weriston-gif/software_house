@@ -15,7 +15,7 @@
         <form class="w-full" action="{{ route('cadastro-orcamento-tipo.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <label for="browser_support" class="block">Qual browser:</label>
                    <input type="text" name="browser_support" id="browser_support" placeholder="Quais browser" class="w-full rounded-md p-2 border border-gray-300">
                     @error('browser_support')

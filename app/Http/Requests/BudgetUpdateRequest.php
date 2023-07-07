@@ -24,10 +24,10 @@ class BudgetUpdateRequest extends FormRequest
     {
         return [
             'id' => [
-                'required', 'integer', Rule::exists('user_project_budgets', 'id'),
+                'required', 'string', Rule::exists('user_project_budgets', 'id'),
             ],
             'idBudget' => [
-                'required', 'integer',
+                'required', 'string',
             ],
             'name' => 'required|string',
             'email' => 'required|email',
