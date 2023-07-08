@@ -13,8 +13,8 @@ return new class extends Migration
     {
         //Schema::dropIfExists('user_project_budget_types');
         Schema::create('user_project_budget_types', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_project_budget_id');
+            $table->uuid('id')->primary();
+            $table->uuid('user_project_budget_id');
             $table->unsignedBigInteger('type_id');
 
             $table->bigInteger('value_total_page');
@@ -31,10 +31,9 @@ return new class extends Migration
             $table->decimal('final_budget_value', 8, 2);
             $table->timestamps();
 
-            $table->foreign('user_project_budget_id')->references('id')->on('user_project_budgets')->onDelete('cascade'); // Alterado a referência para "user_project_budget"
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->foreign('user_project_budget_id')->references('id')->on('user_project_budgets')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('types');
         });
-
     }
 
     /**

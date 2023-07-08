@@ -8,6 +8,8 @@ use App\Models\UserProjectBudgetType;
 use App\Services\BudgetService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Artisan;
+use Tests\CreatesApplication;
 use Tests\TestCase;
 
 // php artisan test --filter=BudgetRegistrationStoreTest
@@ -15,6 +17,14 @@ use Tests\TestCase;
 class BudgetRegistrationStoreTest extends TestCase
 {
     use WithoutMiddleware; // use this trait
+    use CreatesApplication;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Artisan::call('migrate:fresh');
+    }
     public function testStore()
     {
             // Crie um registro inicial na tabela 'user_project_budgets' usando um modelo de fábrica
@@ -60,6 +70,9 @@ class BudgetRegistrationStoreTest extends TestCase
     public function testUpdate()
     {
         // Crie um registro inicial na tabela user_project_budgets
+        Type::factory()->create();
+        $type = Type::first();
+
         $userProjectBudget = UserProjectBudget::factory()->create([
             'name' => 'Ficticio da Silva',
             'email' => 'noreplay@noreplay.com',
@@ -79,7 +92,7 @@ class BudgetRegistrationStoreTest extends TestCase
             'user_project_budget_id' => $userProjectBudget->id,
             'final_budget_value' => 134.00,
             'value_total_page' => 12,
-            'type_id' => 1,
+            'type_id' => $type->id,
             'platform' => 'Teste',
             'page_login' => true,
             'system_pay' => true,
@@ -104,7 +117,7 @@ class BudgetRegistrationStoreTest extends TestCase
             'pais' => $userProjectBudget->pais,
             'final_budget_value' => 1334.00,
             'value_total_page' => 12,
-            'type_id' => 1,
+            'type_id' => $type->id,
             'platform' => 'Teste update',
             'page_login' => true,
             'system_pay' => true,
@@ -133,7 +146,7 @@ class BudgetRegistrationStoreTest extends TestCase
         $data_user_types = [
             'final_budget_value' => 1334.00,
             'value_total_page' => 12,
-            'type_id' => 1,
+            'type_id' => $type->id,
             'platform' => 'Teste update',
             'page_login' => true,
             'system_pay' => true,

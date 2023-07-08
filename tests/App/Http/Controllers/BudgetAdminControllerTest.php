@@ -5,6 +5,8 @@ namespace Tests\App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserProjectBudgetType;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Artisan;
+use Tests\CreatesApplication;
 use Tests\TestCase;
 
 // php artisan test --filter=BudgetAdminControllerTest
@@ -14,6 +16,14 @@ class BudgetAdminControllerTest extends TestCase
     /**
      * A basic feature test example.
      */
+    use CreatesApplication;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Artisan::call('migrate:fresh');
+    }
     public function testAdminRoute()
     {
         $user = User::factory()->create(['role_admin' => false]);
