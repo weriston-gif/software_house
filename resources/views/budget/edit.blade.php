@@ -139,9 +139,9 @@
 
                 </div>
                 <div class="col-3">
-                    <label for="value_per_page" class="block">Quantas telas: </label>
-                    <input type="text" name="value_per_page" id="value_per_page" value=" {{ $user['value_total_page'] }}" class="w-full rounded-md p-2 border border-gray-300">
-                    @error('value_per_page')
+                <label for="value_total_page" class="block">Quantas telas: </label>
+                    <input type="text" name="value_total_page" id="value_total_page" value="{{ $user['value_total_page'] }}" class="w-full rounded-md p-2 border border-gray-300">
+                    @error('value_total_page')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
@@ -155,10 +155,10 @@
                     @enderror
                 </div>
                 <div class="col-3  genericElement">
-                    <label for="value_page_login" class="block">Terá tela de login: </label>
-                    <input type="hidden" name="value_page_login" value="0">
-                    <input type="checkbox" name="value_page_login" value="1" id="value_page_login" {{ (!empty($user['page_login']) && $user['page_login']) ? 'checked' : '' }}>
-                    @error('value_page_login')
+                    <label for="page_login" class="block">Terá tela de login: </label>
+                    <input type="hidden" name="page_login" value="0">
+                    <input type="checkbox" name="page_login" value="1" id="page_login" {{ (!empty($user['page_login']) && $user['page_login']) ? 'checked' : '' }}>
+                    @error('page_login')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
@@ -186,9 +186,9 @@
                 </div>
             </div>
 
-            <input type="hidden" id="idBudget" name="idBudget" value="{{ $user['id'] }}">
-            <input type="hidden" id="id" name="id" value="{{ $user['user_project_budget']['id']}}">
-            <input type="hidden" id="type" name="type" value="">
+            <input type="hidden" id="user_project_budget_type_id" name="user_project_budget_type_id" value="{{ $user['id'] }}">
+            <input type="hidden" id="user_project_budget_id" name="user_project_budget_id" value="{{ $user['user_project_budget']['id']}}">
+            <input type="hidden" id="type_id" name="type_id" value="">
 
             <div class="d-flex align-items-end flex-column bd-highlight mb-3" style="height: 50px;">
                 <div class="mt-auto p-2 bd-highlight">
@@ -210,7 +210,7 @@
             // Obtenha o elemento select pelo ID
             const tipoSelect = document.getElementById('tipoSelect');
             const selectedValue = tipoSelect.value;
-            document.getElementById('type').value = selectedValue;
+            document.getElementById('type_id').value = selectedValue;
 
             // Obtenha os elementos que devem ser exibidos ou ocultados
             const webElements = document.querySelectorAll('.webElement');
@@ -233,7 +233,7 @@
             function handleTipoSelectChange() {
                 // Obtenha o valor selecionado
                 const selectedValue = tipoSelect.value;
-                document.getElementById('type').value = selectedValue;
+                document.getElementById('type_id').value = selectedValue;
 
                 // Exiba ou oculte elementos com base no valor selecionado
                 if (selectedValue === '1') {

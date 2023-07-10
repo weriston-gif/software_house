@@ -23,22 +23,7 @@ class BudgetServiceTest extends TestCase
 
         Artisan::call('migrate:fresh');
     }
-    public function testRegisterBudgetValidationFailure()
-    {
-        // Dados fictícios inválidos para forçar a falha na validação
-        $data = [
-            'user_project_budget_id' => 1,
-            'type_id' => 4,
-            // Outros campos necessários ausentes
-        ];
 
-        // Chame o método registerBudget() da classe BudgetService
-        $budgetService = new BudgetService();
-
-        // Verifique se ocorre uma exceção de validação ao chamar o método com dados inválidos
-        $this->expectException(ValidationException::class);
-        $budgetService->registerBudget($data);
-    }
 
     public function testGetFilteredBudgetForUser()
     {

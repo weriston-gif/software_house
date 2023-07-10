@@ -23,10 +23,13 @@ class BudgetUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => [
+            'user_project_budget_id' => [
                 'required', 'string', Rule::exists('user_project_budgets', 'id'),
             ],
-            'idBudget' => [
+            'user_project_budget_type_id' => [
+                'required', 'string',
+            ],
+            'type_id' => [
                 'required', 'string',
             ],
             'name' => 'required|string',
@@ -40,6 +43,14 @@ class BudgetUpdateRequest extends FormRequest
             'municipio' => 'required',
             'uf' => 'required',
             'pais' => 'required',
+
+            'value_total_page' => 'required|string',
+
+            'page_login' => 'boolean',
+            'system_pay' => 'boolean',
+            'printer' => 'boolean',
+            'license_access' => 'boolean',
+    
 
         ];
     }
