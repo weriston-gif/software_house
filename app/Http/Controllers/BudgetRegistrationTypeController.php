@@ -31,7 +31,6 @@ class BudgetRegistrationTypeController extends Controller
     {
 
         try {
-
             $totalValue = $this->budgetService->calculateTotalValue($request->value_total_page, $request->page_login, $request->type_id);
             $userProjectBudgetTypeDTO = new BudgetRegistrationTypeDTO($request, $totalValue);
             $register =  $this->budgetService->registerBudget($userProjectBudgetTypeDTO->toArray());
@@ -75,7 +74,7 @@ class BudgetRegistrationTypeController extends Controller
             $totalValue = $this->budgetService->calculateTotalValue($request->value_total_page, $request->page_login, $request->type_id);
 
             $userProjectBudgetTypeUpdateDTO = new BudgetRegistrationTypeUpdateDTO($request, $totalValue);
-         
+
             $data_user_persona = $userProjectBudgetTypeUpdateDTO->getUserPersonaData();
             $data_user_types = $userProjectBudgetTypeUpdateDTO->getUserTypesData();
 

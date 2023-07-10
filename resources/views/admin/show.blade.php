@@ -156,7 +156,7 @@
                                     @csrf
                                     <button class="btn " type="submit">
                                         <p style="color: #0d6efd;">
-                                            Confirmar o envio do Orçamento
+                                            Reenviar  orçamento por e-mail
                                         </p>
                                     </button>
                                 </form>

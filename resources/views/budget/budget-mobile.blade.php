@@ -17,8 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <label for="platform" class="block">Qual plataforma:</label>
-                    <input type="platform" name="platform" id="platform" placeholder="Quais plataformas..." class="w-full rounded-md p-2 border border-gray-300">
-
+                    <input type="text" name="platform" id="platform" placeholder="Quais plataforma" class="w-full rounded-md p-2 border border-gray-300">
                     @error('platform')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
@@ -48,7 +47,7 @@
                     @enderror
                 </div>
             </div>
-            <input type="hidden" id="user_project_budget_id"  name="value">
+            <input type="hidden" id="user_project_budget_id" name="user_project_budget_id">
             <input type="hidden" id="type_id" name="type_id" value="2">
 
             <div class="flex justify-end mt-3">

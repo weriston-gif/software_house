@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @section('title', 'Orçamento de Desktop.')
+    @section('title', 'Orçamento de Web.')
     @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
