@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\BudgetRegistrationTypeDTO;
+use App\DTO\BudgetRegistrationTypeUpdateDTO;
+use App\DTO\UserProjectBudgetTypeDTO;
 use App\Http\Requests\BudgetUpdateRequest;
 use App\Http\Requests\CreateBudgetTypeRequest;
 use App\Models\Type;
@@ -19,43 +22,7 @@ class BudgetRegistrationTypeController extends Controller
         $this->budgetService = $budgetService;
     }
 
-    private function getRequestValues(Request $request)
-    {
-        $valuePerPage = $request->input('value_per_page');
-        $valuePageLogin = $request->input('value_page_login');
-        $browserSupport = $request->input('browser_support');
-        $operationalSystem = $request->input('operational_system');
-        $printer = $request->input('printer');
-        $licenseAccess = $request->input('license_access');
-        $systemPay = $request->input('system_pay');
-        $user_project_budget_id = $request->input('value');
-        $platform = $request->input('platform');
-        $type = $request->input('type');
 
-        $browserSupport = $browserSupport ?? '0';
-        $operationalSystem = $operationalSystem ?? '0';
-        $platform = $platform ?? '0';
-
-        $valuePageLogin = $valuePageLogin ?? '0';
-
-        $systemPay = $systemPay ?? false;
-        $valuePerPage = $valuePerPage ?? 0;
-        $printer = $printer ?? false;
-        $licenseAccess = $licenseAccess ?? false;
-
-        return [
-            'valuePerPage' => $valuePerPage,
-            'valuePageLogin' => $valuePageLogin,
-            'browserSupport' => $browserSupport,
-            'operationalSystem' => $operationalSystem,
-            'printer' => $printer,
-            'licenseAccess' => $licenseAccess,
-            'systemPay' => $systemPay,
-            'idValidate' => $user_project_budget_id,
-            'platform' => $platform,
-            'type' => $type,
-        ];
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -64,38 +31,10 @@ class BudgetRegistrationTypeController extends Controller
     {
 
         try {
-            // Obtenha os valores do request
-            $values = $this->getRequestValues($request);
-          
-            $valuePerPage = $values['valuePerPage'];
-            $valuePageLogin = $values['valuePageLogin'];
-            $browserSupport = $values['browserSupport'];
-            $operationalSystem = $values['operationalSystem'];
-            $printer = $values['printer'];
-            $licenseAccess = $values['licenseAccess'];
-            $systemPay = $values['systemPay'];
-            $idValidate = $values['idValidate'];
-            $platform = $values['platform'];
-            $type = $values['type'];
 
-            // Calcule o valor total usando o serviço 'BudgetService'
-            $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin, $type);
-            // Registre os dados na tabela 'user_project_budget_types' usando o serviço 'BudgetService'
-            $data_register = [
-                'user_project_budget_id' => $idValidate,
-                'value_total_page' => $valuePerPage,
-                'type_id' => $type,
-                'platform' => $platform,
-                'page_login' => $valuePageLogin,
-                'system_pay' => $systemPay,
-                'final_budget_value' => $totalValue,
-                'license_access' => $licenseAccess,
-                'printer' => $printer,
-                'operational_system' => $operationalSystem,
-                'browser_support' => $browserSupport,
-            ];
-
-            $register = $this->budgetService->registerBudget($data_register);
+            $totalValue = $this->budgetService->calculateTotalValue($request->value_total_page, $request->page_login, $request->type_id);
+            $userProjectBudgetTypeDTO = new BudgetRegistrationTypeDTO($request, $totalValue);
+            $register =  $this->budgetService->registerBudget($userProjectBudgetTypeDTO->toArray());
 
             // Verifique se o registro foi bem-sucedido antes de redirecionar
             if ($register) {
@@ -132,49 +71,16 @@ class BudgetRegistrationTypeController extends Controller
     {
         try {
 
-            $data_user = $request->validated();
-            $values = $this->getRequestValues($request);
 
-            $valuePerPage = $values['valuePerPage'];
-            $valuePageLogin = $values['valuePageLogin'];
-            $browserSupport = $values['browserSupport'];
-            $operationalSystem = $values['operationalSystem'];
-            $printer = $values['printer'];
-            $licenseAccess = $values['licenseAccess'];
-            $systemPay = $values['systemPay'];
-            $platform = $values['platform'];
-            $type = $values['type'];
+            $totalValue = $this->budgetService->calculateTotalValue($request->value_total_page, $request->page_login, $request->type_id);
 
-            $data_user_persona = [
-                'name' => $data_user['name'],
-                'email' => $data_user['email'],
-                'telefone' => $data_user['telefone'],
-                'cep' => $data_user['cep'],
-                'rua' => $data_user['rua'],
-                'numero' => $data_user['numero'],
-                'bairro' => $data_user['bairro'],
-                'complemento' => $data_user['complemento'],
-                'municipio' => $data_user['municipio'],
-                'uf' => $data_user['uf'],
-                'pais' => $data_user['pais'],
+            $userProjectBudgetTypeUpdateDTO = new BudgetRegistrationTypeUpdateDTO($request, $totalValue);
+         
+            $data_user_persona = $userProjectBudgetTypeUpdateDTO->getUserPersonaData();
+            $data_user_types = $userProjectBudgetTypeUpdateDTO->getUserTypesData();
 
-            ];
+            $this->budgetService->updateBudgetForUserType($request->user_project_budget_id, $request->user_project_budget_type_id, $data_user_persona, $data_user_types);
 
-            $totalValue = $this->budgetService->calculateTotalValue($valuePerPage, $valuePageLogin, $type);
-            $data_user_types = [
-                'final_budget_value' => $totalValue,
-                'value_total_page' => $valuePerPage,
-                'type_id' => $type,
-                'platform' => $platform,
-                'page_login' => $valuePageLogin,
-                'system_pay' => $systemPay,
-                'license_access' => $licenseAccess,
-                'printer' => $printer,
-                'operational_system' => $operationalSystem,
-                'browser_support' => $browserSupport,
-            ];
-
-            $this->budgetService->updateBudgetForUserType($data_user['id'], $data_user['idBudget'], $data_user_persona, $data_user_types);
 
             // Retornar uma resposta de sucesso, redirecionar ou fazer qualquer outra coisa necessária
             return redirect()->back()->with('success', 'Orçamento atualizado com sucesso! Enviamos para seu e-mail os dados');

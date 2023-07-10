@@ -23,9 +23,9 @@
                     @enderror
                 </div>
                 <div class="col-6">
-                    <label for="value_per_page" class="block">Quantas telas: </label>
-                    <input type="number" name="value_per_page" id="value_per_page" value="{{ old('value_per_page') ?? '' }}" class="w-full rounded-md p-2 border border-gray-300">
-                    @error('value_per_page')
+                    <label for="value_total_page" class="block">Quantas telas: </label>
+                    <input type="number" name="value_total_page" id="value_total_page" value="{{ old('value_total_page') ?? '' }}" class="w-full rounded-md p-2 border border-gray-300">
+                    @error('value_total_page')
                     <span style="color: red;">{{ $message }}</span>
                     @enderror
                 </div>
@@ -46,8 +46,8 @@
                     @enderror
                 </div>
             </div>
-            <input type="hidden" id="hidden-input" id="value" name="value">
-            <input type="hidden" id="type" name="type" value="3">
+            <input type="hidden" id="user_project_budget_id" id="user_project_budget_id" name="user_project_budget_id">
+            <input type="hidden" id="type_id" name="type_id" value="3">
 
 
             <div class="flex justify-end mt-3">
@@ -60,6 +60,6 @@
         // Obtém o valor da sessionStorage
         var id = sessionStorage.getItem('id');
         // Define o valor do input hidden
-        document.getElementById('hidden-input').value = id;
+        document.getElementById('user_project_budget_id').value = id;
     </script>
 </x-guest-layout>

@@ -8,6 +8,7 @@ use App\Models\UserProjectBudgetType;
 use App\Notifications\NewBudget;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -56,6 +57,7 @@ class BudgetService
 
     public function updateBudgetForUserType($idUserProject, $idUserProjectType, array $dataUserPersona, array $dataUserTypes)
     {
+
         try {
             DB::beginTransaction();
 
@@ -82,58 +84,20 @@ class BudgetService
 
     public function registerBudget(array $data)
     {
-        // Definir as regras de validação para cada campo
-        $rules = [
-            'user_project_budget_id' =>  'required', 'string', Rule::exists('user_project_budgets', 'id'),
-            'type_id' => 'required', Rule::exists('type', 'id'),
-            'value_total_page' => 'integer|required',
+        try {
+            $budgetType = UserProjectBudgetType::create($data);
+    
+            return $budgetType->id;
+        } catch (\Exception $e) {
+            // Tratamento da exceção
+            // Por exemplo, você pode registrar o erro, exibir uma mensagem de erro, etc.
+            Log::error('Erro ao registrar o orçamento: ' . $e->getMessage());
 
-            'platform' => 'string',
-            'browser_support' => 'string',
-            'operational_system' => 'string',
-
-            'page_login' => 'boolean',
-            'system_pay' => 'boolean',
-            'printer' => 'boolean',
-            'license_access' => 'boolean',
-
-            'final_budget_value' => 'required|numeric',
-        ];
-
-        // Definir as mensagens de erro personalizadas
-        $messages = [
-            'user_project_budget_id.required' => 'O campo "ID do usuário" é obrigatório.',
-            'user_project_budget_id.exists' => 'O ID do usuário não foi encontrado.',
-            'type_id.required' => 'O campo "ID do tipo" é obrigatório.',
-            'type_id.exists' => 'O ID do tipo não foi encontrado.',
-            'final_budget_value.required' => 'O campo "Valor final do orçamento" é obrigatório.',
-            'final_budget_value.numeric' => 'O campo "Valor final do orçamento" deve ser um número.',
-        ];
-
-        // Realizar a validação dos campos
-        $validator = validator($data, $rules, $messages);
-
-        // Verificar se houve erros de validação
-        if ($validator->fails()) {
-            throw new ValidationException($validator);
+            // Lançar a exceção novamente se desejar propagá-la para camadas superiores
+            throw new \Exception('Erro ao registrar o orçamento:  ' . $e->getMessage());
         }
-        // Criar um novo registro na tabela user_project_budget_types
-        $budgetType = UserProjectBudgetType::create([
-            'user_project_budget_id' => $data['user_project_budget_id'],
-            'type_id' => $data['type_id'],
-            'value_total_page' => $data['value_total_page'],
-            'platform' => $data['platform'] ?? 0,
-            'browser_support' => $data['browser_support'] ?? 0,
-            'operational_system' => $data['operational_system'] ?? 0,
-            'system_pay' => isset($data['system_pay']) && $data['system_pay'] === '1',
-            'page_login' => isset($data['page_login']) && $data['page_login'] === '1',
-            'printer' => isset($data['printer']) && $data['printer'] === '1',
-            'license_access' => isset($data['license_access']) && $data['license_access'] === '1',
-            'final_budget_value' => $data['final_budget_value'],
-        ]);
-
-        return $budgetType->id;
     }
+    
     //metodo de envio de e-mail
     public function sendBuget($email)
     {

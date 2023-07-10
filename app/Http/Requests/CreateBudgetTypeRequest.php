@@ -25,14 +25,14 @@ class CreateBudgetTypeRequest extends FormRequest
         return [
             'platform' => 'string',
             'browser_support' => 'string',
-            'type' => 'string|numeric',
+            'type_id' => 'string|numeric',
             'operational_system' => 'string',
-            'value_per_page' => 'required|numeric',
-            'value_page_login' => 'boolean',
+            'value_total_page' => 'required|numeric',
+            'page_login' => 'boolean',
             'system_pay' => 'boolean',
             'printer' => 'boolean',
             'license_access' => 'boolean',
-            'value' => [
+            'user_project_budget_id' => [
                 'required', 'string', Rule::exists('user_project_budgets', 'id'),
             ],
 
